@@ -10,9 +10,9 @@
         function start() {
             // Step 1: Scan for a device with 0xffe5 service
             navigator.bluetooth.requestDevice({
-                filters: [{
+                /*filters: [{
                     services: [0xffe5]
-            }]
+            }]*/
             }).then(function (device) {
                 // Step 2: Connect to it
                 return device.gatt.connect();
