@@ -17,13 +17,18 @@ function initMap() {
   // Instantiate an info window to hold step text.
   var stepDisplay = new google.maps.InfoWindow;
   // Display the route between the initial start and end selections.
-  calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
+  //calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
   // Listen to change events from the start and end lists.
   var onChangeHandler = function () {
     calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
   };
-  document.getElementById('start').addEventListener('change', onChangeHandler);
-  document.getElementById('end').addEventListener('change', onChangeHandler);
+    
+document.getElementById("calculateRouteButton").onclick = onChangeHandler;
+    
+//Autocomplete inputs
+    var autocompleteStart = new google.maps.places.Autocomplete(startInput);
+    var autocompleteEnd = new google.maps.places.Autocomplete(endInput);
+
 }
 
 function calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map) {
@@ -34,14 +39,14 @@ function calculateAndDisplayRoute(directionsDisplay, directionsService, markerAr
   // Retrieve the start and end locations and create a DirectionsRequest using
   // WALKING directions.
   directionsService.route({
-    origin: document.getElementById('start').value
-    , destination: document.getElementById('end').value
+    origin: document.getElementById('startInput').value
+    , destination: document.getElementById('endInput').value
     , travelMode: 'WALKING'
   }, function (response, status) {
     // Route the directions and pass the response to a function to create
     // markers for each step.
     if (status === 'OK') {
-      document.getElementById('warnings-panel').innerHTML = '<b>' + response.routes[0].warnings + '</b>';
+      //document.getElementById('warnings-panel').innerHTML = '<b>' + response.routes[0].warnings + '</b>';
      
       directionsDisplay.setDirections(response);
       showSteps(response, markerArray, stepDisplay, map);

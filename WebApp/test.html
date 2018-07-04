@@ -9,10 +9,10 @@
     <script>
         function start() {
             // Step 1: Scan for a device with 0xffe5 service
-            navigator.bluetooth.requestDevice({
-                /*filters: [{
-                    services: [0xffe5]
-            }]*/
+            navigator.bluetooth.requestDevice({acceptAllDevices:true
+                filters: [{
+                    services: [0x1819]
+            }]
             }).then(function (device) {
                 // Step 2: Connect to it
                 return device.gatt.connect();
@@ -28,10 +28,10 @@
                 return characteristic.writeValue(data);
             }).catch(function (error) {
                 // And of course: error handling!
-                console.error('Connection failed!', error);
+                console.error('Connection failed!', error);  
             });
         }
     </script>
 </body>
-
+ 
 </html>
