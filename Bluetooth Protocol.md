@@ -3,7 +3,7 @@
   - `STX` `M` `X` `ETX`
   - where `M` stands for maneuver and `X` gives the id of the manuever and the assigned arrow
 - Anweisung
-  - Zeit bis zum Ziel
+- Zeit bis zum Ziel
 - Uhrzeit
 - Geschwindigkeit
   - `STX` `S` `XX` `ETX`
