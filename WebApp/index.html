@@ -18,17 +18,18 @@
     <div style="text-align: center;"><img src="assets/logo.png" class="logo"></div>
     <br>
     <div style="text-align: center;">
-        <button class="btn btn-outline btn-success">Connect Bike Computer</button>
+        <button class="btn btn-outline btn-success" onclick="connectToBluetoothDevice()" id="connectButton">Connect Bike Computer</button>
+        <input type="text" id="inputBT" class="form-control placeInput" placeholder="Nachricht eintippen"><button class="btn btn-info" onclick="sendToBluetooth()">Senden über Bluetooth</button>
     </div>
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 text-center">
             <form>
                 <div class="form-group">
-                    <label>Start</label>
+                    <label class="inputLabel">Start</label>
                     <input type="text" class="form-control placeInput" id="startInput"> </div>
                 <div class="form-group">
-                    <label>Ziel</label>
+                    <label class="inputLabel">Ziel</label>
                     <input type="text" class="form-control placeInput" id="endInput"> </div>
                 <button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
             </form>
