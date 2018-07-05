@@ -1,13 +1,16 @@
 # Welche Daten müssen übertragen werden?
-### Navigation
 - Maneuver
+  - `STX` `M` `X` `ETX`
+  - where `M` stands for maneuver and `X` gives the id of the manuever and the assigned arrow
 - Anweisung
-- Zeit bis zum Ziel
+  - Zeit bis zum Ziel
+- Uhrzeit
+- Geschwindigkeit
+  - `STX` `S` `XX` `ETX`
+  - where `S` stands for speed and `XX` gives the speed in km/h
 
-### Uhrzeit
-
-### Geschwindigkeit
-
+### Notes
+*Please keep in mind that Messages are case sensitive*
 
 # Wichtige Werte
 - **Bluetooth Device Service ID :** `0x1819` 
