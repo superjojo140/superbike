@@ -1,0 +1,365 @@
+{
+    distance: {
+        text: "0,6 km"
+        , value: 556
+    }
+    duration: {
+        text: "1 Minute"
+        , value: 72
+    }
+    encoded_lat_lngs: "qbfyH}_nv@Am@?[ASC[AUE]Gk@Gk@G]CUI[ESUaAEOSy@CMYcAMi@EQMm@CKKg@EYIe@E_@AGGo@Ec@AGUsBWeC_AyH"
+    end_location: _.K {
+        lat: ƒ
+        , lng: ƒ
+    }
+    end_point: _.K {
+        lat: ƒ
+        , lng: ƒ
+    }
+    instructions: "Weiter auf <b>Quellenstraße</b>"
+    lat_lngs: (33)[_.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K]
+    maneuver: "turn-right"
+    path: (33)[_.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K, _.K]
+    polyline: {
+        points: "qbfyH}_nv@Am@?[ASC[AUE]Gk@Gk@G]CUI[ESUaAEOSy@CMYcAMi@EQMm@CKKg@EYIe@E_@AGGo@Ec@AGUsBWeC_AyH"
+    }
+    start_location: _.K {
+        lat: ƒ
+        , lng: ƒ
+    }
+    start_point: _.K {
+        lat: ƒ
+        , lng: ƒ
+    }
+    travel_mode: "BICYCLING"
+}
+
+
+Instructions
+
+Auf <b>Landstraße</b> nach <b>Süden</b> Richtung <b>Warburger Weg</b>
+
+<b>Links</b> abbiegen auf <b>Rießen</b>
+turn-left
+Leicht <b>links</b> abbiegen auf <b>Laubacher Weg</b>
+turn-slight-left
+Leicht <b>links</b> abbiegen
+turn-slight-left
+<b>Rechts</b> abbiegen
+turn-right
+<b>Rechts</b> abbiegen
+turn-right
+<b>Rechts</b> abbiegen auf <b>Lütteken Feld</b>
+turn-right
+<b>Rechts</b> Richtung <b>Zum Kurgarten</b> abbiegen
+turn-right
+<b>Links</b> abbiegen auf <b>Zum Kurgarten</b>
+turn-left
+<b>Rechts</b> abbiegen auf <b>Rottheimer Str.</b>
+turn-right
+Weiter auf <b>Zum Donnerberg</b>
+
+<b>Links</b> abbiegen
+turn-left
+<b>Rechts</b> abbiegen
+turn-right
+<b>Rechts</b> abbiegen auf <b>Johannistorstraße</b>
+turn-right
+<b>Links</b> abbiegen auf <b>Ostertwete</b>
+turn-left
+<b>Rechts</b> abbiegen auf <b>Am Bittkreuz</b>
+turn-right
+<b>Rechts</b> Richtung <b>Burggraben</b> abbiegen
+turn-right
+<b>Links</b> abbiegen auf <b>Burggraben</b>
+turn-left
+<b>Rechts</b> abbiegen auf <b>Emil-Herz-Platz</b>
+turn-right
+<b>Links</b> abbiegen auf <b>Graf-Dodiko-Weg</b>
+turn-left
+<b>Rechts</b> abbiegen auf <b>Paderborner Tor</b>
+turn-right
+<b>Links</b> abbiegen auf <b>Piepenbrinkgasse</b><div style="font-size:0.9em">Schiebe dein Fahrrad.</div>
+turn-left
+
+
+//Hamburg - München
+
+Auf <b>Rathausmarkt</b> nach <b>Südosten</b> Richtung <b>Hermannstraße</b>
+<b>Links</b> abbiegen auf <b>Mönckebergstraße</b>
+<b>Rechts</b> abbiegen auf <b>Barkhof</b>
+Geradeaus auf <b>Jakobikirchhof</b>
+<b>Links</b> abbiegen auf <b>Bugenhagenstraße</b>
+<b>Rechts</b> abbiegen auf <b>Lange Mühren</b>
+<b>Links</b> abbiegen auf <b>Steinstraße</b>
+<b>Rechts</b> abbiegen auf <b>Klosterwall</b>
+Leicht <b>links</b> abbiegen auf <b>Deichtorpl.</b>
+Weiter auf <b>Amsinckstraße</b>
+Leicht <b>rechts</b> abbiegen auf <b>Högerdamm</b>
+<b>Rechts</b> abbiegen auf <b>Amsinckstraße</b>/<b>B4</b><div style="font-size:0.9em">Weiter auf B4</div>
+Ausfahrt Richtung <b>Hafencity</b>
+Leicht <b>links</b> abbiegen
+<b>Rechts</b> halten
+Fußgängerüberführung nehmen
+Fußgängerunterführung nehmen
+<b>Rechts</b> abbiegen auf <b>Veddeler Marktpl.</b>
+Weiter auf <b>Veddeler Brückenstraße</b>
+Weiter auf <b>Wilhelmsburger Pl.</b>
+Nach <b>rechts</b> abbiegen, um auf <b>Wilhelmsburger Pl.</b> zu bleiben
+Weiter auf <b>Wilhelmsburger Brücke</b>
+<b>Rechts</b> abbiegen auf <b>Harburger Chaussee</b>
+<b>Links</b> abbiegen auf <b>Georg-Wilhelm-Straße</b>
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+Leicht <b>rechts</b> abbiegen Richtung <b>Kükenbracksweg</b>
+Weiter auf <b>Kükenbracksweg</b>
+<b>Links</b> abbiegen
+Leicht <b>links</b> abbiegen Richtung <b>König-Georg-Deich</b>
+<b>Rechts</b> abbiegen auf <b>König-Georg-Deich</b>
+<b>König-Georg-Deich</b> verläuft leicht nach <b>links</b> und wird zu <b>Alte Harburger Elbbrücke</b>
+<b>Links</b> abbiegen auf <b>Hafenbezirk</b>
+<b>Rechts</b> abbiegen auf <b>Nartenstraße</b>
+Weiter auf <b>Klappbrücke</b>/<b>Veritaskai</b><div style="font-size:0.9em">Weiter auf Veritaskai</div>
+Weiter auf <b>Kanalpl.</b>
+<b>Links</b> abbiegen auf <b>Harburger Schloßstraße</b>
+<b>Rechts</b> Richtung <b>Neue Str.</b> abbiegen
+Leicht <b>links</b> abbiegen auf <b>Neue Str.</b>
+<b>Rechts</b> abbiegen auf <b>Harburger Ring</b>
+Nach <b>links</b> abbiegen, um auf <b>Harburger Ring</b> zu bleiben
+Weiter auf <b>Eißendorfer Str.</b>
+Weiter auf <b>Ehestorfer Weg</b>
+Weiter auf <b>K74</b>
+<b>Rechts</b> abbiegen auf <b>Harburger Str.</b>
+Weiter auf <b>Sottorfer Dorfstraße</b>
+Leicht <b>rechts</b> abbiegen auf <b>Brandheide</b>
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen auf <b>B3</b>
+Leicht <b>rechts</b> abbiegen, um auf <b>B3</b> zu bleiben
+<b>Rechts</b> abbiegen auf <b>Hamburger Str.</b>
+Weiter auf <b>Hillern</b>
+Weiter auf <b>Huckenrieth</b>
+Leicht <b>links</b> abbiegen auf <b>Vor den Höfen</b>
+Weiter auf <b>Harburger Str.</b>
+Weiter auf <b>Unter den Linden</b>
+Weiter auf <b>Poststraße</b>
+Weiter auf <b>Am Alten Stadtgraben</b>
+<b>Links</b> abbiegen auf <b>Kirchstraße</b>/<b>Poststraße</b>/<b>B71</b><div style="font-size:0.9em">Weiter auf B71</div>
+<b>Rechts</b> abbiegen auf <b>Celler Str.</b>
+Weiter auf <b>Bassel</b>
+Weiter auf <b>B3</b>
+<b>Rechts</b> halten und weiter auf <b>Neumarkt</b>/<b>B3</b>
+Leicht <b>rechts</b> abbiegen, um auf <b>Neumarkt</b>/<b>B3</b> zu bleiben<div style="font-size:0.9em">Weiter auf B3</div><div style="font-size:0.9em">Den Kreisverkehr passieren</div>
+<b>Links</b> abbiegen auf <b>Bahnhofstraße</b>/<b>B3</b>
+<b>Rechts</b> abbiegen auf <b>Hannoversche Str.</b>/<b>B3</b><div style="font-size:0.9em">Weiter auf B3</div>
+<b>Rechts</b> abbiegen auf <b>K84</b>
+An der Gabelung <b>rechts</b> halten, Beschilderung in Richtung <b>Hannover</b>/<b>Ehlershausen</b>/<b>B3</b> folgen
+Auf <b>B3</b> fahren
+<b>Links</b> abbiegen auf <b>Röhndamm</b> (Schilder nach <b>Obershagen</b>/<b>Hänigsen</b>)
+ <b>Rechts</b> abbiegen
+Leicht <b>rechts</b> abbiegen
+Bei <b>Burgdorfer Str.</b> <b>rechts</b> abbiegen
+Geradeaus
+<b>Links</b> Richtung <b>Rapsfeld</b> abbiegen
+<b>Rechts</b> abbiegen auf <b>Rapsfeld</b>
+<b>Links</b> abbiegen auf <b>Sprengelstraße</b>
+Weiter auf <b>Schillerslager Landstraße</b>
+Im Kreisverkehr <b>zweite</b> Ausfahrt (<b>Schillerslager Landstraße</b>/<b>B443</b>) nehmen<div style="font-size:0.9em">Weiter auf B443</div>
+<b>Links</b> abbiegen auf <b>Peiner Heerstraße</b>
+<b>Rechts</b> abbiegen auf <b>Zum Roden</b>
+Weiter auf <b>Aligser Weg</b>
+<b>Rechts</b> abbiegen auf <b>Stackmannstraße</b>
+<b>Rechts</b> abbiegen auf <b>Grünstraße</b>
+<b>Links</b> abbiegen auf <b>Poststraße</b>/<b>B443</b><div style="font-size:0.9em">Weiter auf B443</div>
+Leicht <b>links</b> abbiegen, um auf <b>B443</b> zu bleiben<div style="font-size:0.9em">Den Kreisverkehr passieren</div>
+Leicht <b>links</b> abbiegen auf <b>Lehrter Str.</b>/<b>B443</b><div style="font-size:0.9em">Den Kreisverkehr passieren</div>
+<b>Links</b> halten und auf <b>Lehrter Str.</b>/<b>B443</b> bleiben
+Weiter auf <b>Nordstraße</b>
+Weiter auf <b>Bolzumer Str.</b>
+<b>Links</b> abbiegen
+<b>Rechts</b> Richtung <b>Ostermarsch</b> abbiegen
+<b>Links</b> abbiegen auf <b>Ostermarsch</b>
+Nach <b>rechts</b> abbiegen, um auf <b>Ostermarsch</b> zu bleiben
+<b>Rechts</b> abbiegen auf <b>Ummilostraße</b>
+Weiter auf <b>Wattekumstraße</b>
+Weiter auf <b>K523</b>
+<b>Links</b> abbiegen auf <b>K519</b>
+Weiter auf <b>Heerstraße</b>
+<b>Rechts</b> abbiegen auf <b>Bahnhofspl.</b>/<b>Schlesische Str.</b><div style="font-size:0.9em">Weiter auf Schlesische Str.</div>
+<b>Rechts</b> abbiegen auf <b>Kranzweg</b>
+<b>Links</b> abbiegen auf <b>Mühlenstraße</b>
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Links</b> abbiegen auf <b>Förster Str.</b>
+<b>Rechts</b> abbiegen
+ <b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+Scharf <b>links</b>
+Scharf <b>rechts</b><div style="font-size:0.9em">Teilweise für den öffentlichen Durchgang gesperrte Straße</div>
+<b>Rechts</b> abbiegen auf <b>Kanalstraße</b>
+<b>Links</b> abbiegen auf <b>Ruscheplatenstraße</b>
+<b>Rechts</b> abbiegen auf <b>Mastbergstraße</b>
+Bei <b>Linnenkamp</b> <b>links</b> abbiegen
+Leicht <b>links</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Links</b> abbiegen auf <b>B243</b>
+<b>B243</b> verläuft leicht nach <b>rechts</b> und wird zu <b>Am Lammeufer</b>
+Weiter auf <b>Detfurther Str.</b>
+Weiter auf <b>Soltmannstraße</b>
+Weiter auf <b>Detfurther Allee</b>
+<b>Links</b> abbiegen auf <b>Unterstraße</b>
+Weiter auf <b>Marktstraße</b>
+Weiter auf <b>Oberstraße</b>
+Weiter auf <b>Bodenburger Str.</b>
+Nach <b>links</b> abbiegen, um auf <b>Bodenburger Str.</b> zu bleiben
+Weiter auf <b>L490</b>
+<b>Rechts</b> abbiegen auf <b>Sehlemer Str.</b>
+Weiter auf <b>L490</b>
+<b>Links</b> abbiegen auf <b>An der Langen Wiese</b>
+ <b>Links</b> abbiegen
+Leicht <b>rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> Richtung <b>L489</b> abbiegen
+<b>Links</b> abbiegen auf <b>L489</b>
+<b>Rechts</b> abbiegen auf <b>Eggershäuser Weg</b>
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+Geradeaus
+<b>Rechts</b> abbiegen auf <b>Braunschweiger Str.</b>
+<b>Links</b> abbiegen auf <b>Marienstraße</b>
+<b>Rechts</b> abbiegen auf <b>Hohenhöfen</b>
+<b>Links</b> abbiegen auf <b>Northeimer Str.</b>
+<b>Rechts</b> Richtung <b>Am Lahberg</b> abbiegen
+<b>Rechts</b> abbiegen auf <b>Am Lahberg</b>
+Nach <b>links</b> abbiegen, um auf <b>Am Lahberg</b> zu bleiben
+<b>Rechts</b> abbiegen auf <b>B445</b>
+<b>Links</b> abbiegen auf <b>Osterbruch</b>/<b>B445</b><div style="font-size:0.9em">Weiter auf B445</div>
+Nach <b>links</b> abbiegen, um auf <b>B445</b> zu bleiben
+<b>Rechts</b> abbiegen auf <b>Hauptstraße</b>
+Weiter auf <b>Auetalstraße</b>
+Nach <b>rechts</b> abbiegen, um auf <b>Auetalstraße</b> zu bleiben
+<b>Rechts</b> abbiegen auf <b>Eboldshäuser Str.</b>
+Weiter auf <b>Schnedekrug</b>
+Weiter auf <b>K403</b>
+<b>Rechts</b> abbiegen auf <b>Leinestraße</b>
+<b>Links</b> abbiegen auf <b>B3</b> (Schilder nach <b>A7</b>/<b>Hannover</b>/<b>Kassel</b>/<b>Northeim</b>)
+ <b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+Im Kreisverkehr <b>erste</b> Ausfahrt (<b>B3</b>) nehmen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Links</b> abbiegen auf <b>Unterer Leineweg</b>
+<b>Rechts</b> abbiegen auf <b>Lange Str.</b>
+Weiter auf <b>Göttinger Str.</b>
+Weiter auf <b>Hannoversche Str.</b>
+Weiter auf <b>K453</b>
+Im Kreisverkehr <b>zweite</b> Ausfahrt (<b>Alte Bundesstraße</b>) nehmen
+Weiter auf <b>Göttinger Str.</b>
+Bei <b>Roter Berg</b> <b>rechts</b> abbiegen
+Weiter auf <b>Hannoversche Str.</b>
+Weiter auf <b>Weender Landstraße</b>/<b>B27</b>/<b>B3</b>
+<b>Rechts</b> abbiegen auf <b>Berliner Str.</b>/<b>B27</b>/<b>B3</b><div style="font-size:0.9em">Weiter auf B27</div>
+<b>Rechts</b> abbiegen auf <b>Reinhäuser Landstraße</b>/<b>B27</b><div style="font-size:0.9em">Weiter auf B27</div>
+<b>Links</b> abbiegen auf <b>L566</b>
+Weiter auf <b>L1001</b>
+Weiter auf <b>Halle-Kasseler-Straße</b>
+<b>Rechts</b> abbiegen auf <b>Thomas-Müntzer-Straße</b>
+Weiter auf <b>L2009</b>
+<b>Links</b> abbiegen auf <b>Krumbach</b>
+Weiter auf <b>L1002</b>
+<b>Rechts</b> abbiegen auf <b>L1003</b>
+Weiter auf <b>L3466</b>
+<b>Rechts</b> abbiegen auf <b>L3239</b>
+<b>Links</b> Richtung <b>Am Bahnhof</b> abbiegen
+Weiter auf <b>Am Bahnhof</b>
+<b>Rechts</b> abbiegen auf <b>Werrastraße</b>
+<b>Rechts</b> abbiegen auf <b>Auf dem Steineckel</b>
+Nach <b>links</b> abbiegen, um auf <b>Auf dem Steineckel</b> zu bleiben
+Leicht <b>rechts</b> abbiegen bei <b>B27</b>
+<b>Rechts</b> abbiegen auf <b>In den Weiden</b>
+<b>Wenden</b>
+Nach <b>rechts</b> abbiegen, um auf <b>In den Weiden</b> zu bleiben
+Scharf <b>rechts</b>
+<b>Rechts</b> Richtung <b>Fährgasse</b> abbiegen
+<b>Rechts</b> abbiegen auf <b>Fährgasse</b>
+<b>Fährgasse</b> verläuft leicht nach <b>links</b> und wird zu <b>Bilsteinstraße</b>
+Nach <b>links</b> abbiegen, um auf <b>Bilsteinstraße</b> zu bleiben
+ <b>Rechts</b> abbiegen
+Weiter auf <b>Eltmannshäuser Str.</b>
+<b>Links</b> abbiegen auf <b>Weidenhäuser Str.</b>
+<b>Rechts</b> abbiegen auf <b>Im Baumgarten</b>
+<b>Rechts</b> Richtung <b>Am Sportpl.</b> abbiegen
+<b>Links</b> abbiegen auf <b>Am Sportpl.</b>
+ <b>Rechts</b> abbiegen
+ <b>Links</b> abbiegen
+ <b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> Richtung <b>Bahnhofstraße</b> abbiegen
+<b>Links</b> abbiegen auf <b>Bahnhofstraße</b>
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen auf <b>Am Anger</b>
+<b>Links</b> abbiegen auf <b>Borngasse</b>
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen auf <b>Leipziger Str.</b>
+<b>Rechts</b> abbiegen auf <b>Fuhrgraben</b>
+<b>Rechts</b> Richtung <b>Mühlgasse</b> abbiegen
+<b>Links</b> Richtung <b>Mühlgasse</b> abbiegen
+Weiter auf <b>Mühlgasse</b>
+<b>Rechts</b> abbiegen auf <b>Eschweger Str.</b>
+<b>Links</b> abbiegen auf <b>Töpfermarkt</b>
+<b>Rechts</b> abbiegen auf <b>Schöne Aussicht</b>
+<b>Links</b> abbiegen auf <b>Ulfetalstraße</b>/<b>B400</b>
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+<b>Rechts</b> Richtung <b>Untermühle</b> abbiegen
+<b>Links</b> Richtung <b>Untermühle</b> abbiegen
+Weiter auf <b>Untermühle</b>
+<b>Rechts</b> abbiegen auf <b>Kromenweg</b>
+<b>Rechts</b> abbiegen auf <b>Nürnberger Str.</b><div style="font-size:0.9em">Teilweise für den öffentlichen Durchgang gesperrte Straße</div>
+Leicht <b>links</b> abbiegen
+Leicht <b>rechts</b> abbiegen
+Weiter auf <b>Breitauer Str.</b>
+Weiter auf <b>Hauptstraße</b>
+Leicht <b>rechts</b> abbiegen, um auf <b>Hauptstraße</b> zu bleiben
+Nach <b>links</b> abbiegen, um auf <b>Hauptstraße</b> zu bleiben
+Nach <b>rechts</b> abbiegen, um auf <b>Hauptstraße</b> zu bleiben
+<b>Rechts</b> Richtung <b>B400</b> abbiegen
+<b>Links</b> abbiegen auf <b>B400</b>
+Weiter auf <b>L3248</b>
+Leicht <b>links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+ <b>Rechts</b> abbiegen
+<b>Links</b> abbiegen
+Leicht <b>rechts</b> abbiegen auf <b>Kohlbachweg</b>
+Weiter auf <b>Kohlbachstraße</b>
+<b>Links</b> abbiegen auf <b>Am Erlenbach</b>
+<b>Links</b> halten und auf <b>Am Erlenbach</b> bleiben
+<b>Rechts</b> abbiegen auf <b>Marienstraße</b>
+Weiter auf <b>Markt</b>
+<b>Links</b> abbiegen auf <b>Brückenstraße</b>
+Weiter auf <b>L2116</b>
+<b>Rechts</b> abbiegen auf <b>Gerstunger Str.</b>
+Weiter auf <b>Fritz-Erbe-Straße</b>
+<b>Links</b> abbiegen auf <b>Marksuhler Str.</b>
+Weiter auf <b>L1023</b>
+<b>Links</b> abbiegen auf <b>Eisenacher Str.</b>
+<b>Rechts</b> abbiegen auf <b>Bergstraße</b>
+Nach <b>rechts</b> abbiegen, um auf <b>Bergstraße</b> zu bleiben
+<b>Links</b> abbiegen
+<b>Rechts</b> abbiegen
+<b>Rechts</b> abbiegen auf <b>Am Hirtberg</b>
+<b>Links</b> abbiegen auf <b>Im Körbach</b>
+<b>Rechts</b> abbiegen auf <b>Hintergasse</b>
+Weiter auf <b>Wäldersgasse</b>
+Leicht <b>links</b> abbiegen
+<b>Links</b> Richtung <b>Baueshof</b> abbiegen
+Weiter auf <b>Baueshof</b>
