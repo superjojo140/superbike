@@ -4,11 +4,9 @@
 #ifndef SUPERBIKE_GUI_H
 #define SUPERBIKE_GUI_H
 
-#include <epdpaint.h>
-#include <epd1in54.h>
 #include <arrows.h>
 
-#define COLORED     0 
+#define COLORED     0
 #define UNCOLORED   1
 
 class SuperbikeGui{

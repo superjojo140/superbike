@@ -45,4 +45,15 @@ void SuperbikeGui::paintNavigationStep(char *textTop, char *textBottom, char *ar
 }
 
 
-void SuperbikeGui::paintSpeed(char speed){}
+void SuperbikeGui::paintSpeed(char speed){
+  if(speed > 9){
+    sjDrawNumber(80, 40, speed / 10, COLORED, 5, 30, this->paint, this->epd); //Draw tens
+  }
+  sjDrawNumber(120, 40, speed % 10, COLORED, 5, 30, this->paint, this->epd); //Draw ones
+  this->paint->SetWidth(30);
+  this->paint->SetHeight(20);
+  this->paint->Clear(UNCOLORED);
+  const char kmh[]= "kmh";
+  this->paint->DrawStringAt(0,0, kmh, &Font16, COLORED);
+  this->epd->SetFrameMemory(this->paint->GetImage(), 160, 90, this->paint->GetWidth(), this->paint->GetHeight());
+}

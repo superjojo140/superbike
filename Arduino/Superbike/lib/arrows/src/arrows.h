@@ -4,8 +4,7 @@
 #ifndef ARROWS_H
 #define ARROWS_H
 
-#include <epdpaint.h>
-#include <epd1in54.h>
+#include <sjDraw.h>
 
 #define ARROW_WIDTH 11
 #define ARROW_HEIGHT 11

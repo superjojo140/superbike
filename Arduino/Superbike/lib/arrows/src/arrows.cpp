@@ -8,43 +8,7 @@ Arrow::Arrow(char *arrowType, Paint *paint, Epd *epd){
 }
 
 void Arrow::DrawBetterLine(char x0, char y0, char x1, char y1,char color, char thickness, char zoom) {
-  x0 = x0 * zoom;
-  x1 = x1 * zoom;
-  y0 = y0 *zoom;
-  y1 = y1 * zoom;
-  char i=0;
-  if(x0 == x1){
-    //vertical line
-    if(y0 < y1){
-      for(i=0;i<thickness;i++){
-        paint->DrawVerticalLine(x0+i,y0,y1-y0,color);
-      }
-    }
-    else{
-      for(i=0;i<thickness;i++){
-        paint->DrawVerticalLine(x1+i,y1,y0-y1,color);
-      }
-    }
-  }
-  else if(y0 == y1){
-    //HORIZONTAL Line
-    if(x0 < x1){
-      for(i=0;i<thickness;i++){
-        paint->DrawHorizontalLine(x0,y0+i,x1-x0+thickness,color);
-      }
-    }
-    else{
-      for(i=0;i<thickness;i++){
-        paint->DrawHorizontalLine(x1,y1+i,x0-x1+thickness,color);
-      }
-    }
-  }
-  else{
-    //diagonal Line
-    for(i=0;i<thickness;i++){
-      paint->DrawLine(x0+i,y0,x1+i,y1,color);
-    }
-  }
+  sjDrawLine(x0,y0,x1,y1,color,thickness,zoom,this->paint);
 }
 
 void Arrow::drawAt(unsigned char x, unsigned char y,char color, char thickness, char zoom){

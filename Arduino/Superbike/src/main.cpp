@@ -1,29 +1,3 @@
-/**
- *  @filename   :   epd1in54-demo.ino
- *  @brief      :   1.54inch e-paper display demo
- *  @author     :   Yehui from Waveshare
- *
- *  Copyright (C) Waveshare     September 5 2017
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documnetation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to  whom the Software is
- * furished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS OR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
 #include <arduino.h>
 #include <superbike-gui.h>
 
@@ -60,8 +34,10 @@ char arrowTypes[][25]={
   * In this case, a smaller image buffer is allocated and you have to
   * update a partial display several times.
   * 1 byte = 8 pixels, therefore you have to set 8*N pixels at a time.
+  * With a 1000 Byte iframe buffer you can set 8000 pixels
+  * This means a maximum paint size of ca. 90 x 90 pixels (for a square) or 200 x 40 pixels
   */
-unsigned char image[1024]; //NEVER USE A PAINT; BIGGER THAN 800 PIXELS :-(
+unsigned char image[1024];
 Paint paint(image, 0, 0);    // width should be the multiple of 8
 Epd epd;
 
@@ -94,6 +70,7 @@ void setup() {
   SuperbikeGui gui(&paint,&epd);
   gui.paintStatusBar("86%","","12:03");
   gui.paintNavigationStep("Rechts","in 100m",arrowTypes[TURN_RIGHT],"  auf Mittelstr.");
+  gui.paintSpeed(23);
 
 
 
