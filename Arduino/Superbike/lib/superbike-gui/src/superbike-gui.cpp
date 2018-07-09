@@ -17,7 +17,7 @@ void SuperbikeGui::paintStatusBar(char *textLeft , char *textMiddle, char *textR
 }
 
 
-void SuperbikeGui::paintNavigationStep(char *textTop, char *textBottom, char *arrowType, char *streetName){
+void SuperbikeGui::paintNavigationStep(char *textTop, char *textBottom, unsigned char arrowType, char *streetName){
  //For the Top Text - This is splittet because of size of the paints image buffer :-(
   this->paint->SetWidth(200);
   this->paint->SetHeight(30);

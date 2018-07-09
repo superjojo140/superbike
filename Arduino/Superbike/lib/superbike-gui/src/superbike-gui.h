@@ -13,7 +13,7 @@ class SuperbikeGui{
 public:
 SuperbikeGui(Paint *paint, Epd *epd);
 void paintStatusBar(char *textLeft , char *textMiddle, char *textRight);
-void paintNavigationStep(char *textTop, char *textBottom, char *arrowType, char *streetName);
+void paintNavigationStep(char *textTop, char *textBottom, unsigned char arrowType, char *streetName);
 void paintSpeed(char speed);
 
 private:

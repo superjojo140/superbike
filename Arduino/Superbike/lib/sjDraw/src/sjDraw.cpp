@@ -40,7 +40,7 @@ void sjDrawLine(char x0, char y0, char x1, char y1,char color, char thickness, c
   }
 }
 
-void sjDrawNumber(char x, char y, char number, char color, char thickness, char zoom, Paint *paint, Epd *epd){
+void sjDrawNumber(char x, char y, unsigned char number, char color, char thickness, char zoom, Paint *paint, Epd *epd){
 
   //Set paint dimensions
   paint->SetRotate(ROTATE_0);
