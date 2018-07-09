@@ -21,7 +21,8 @@ ID|maneuver
   - where `D` stands for time to **d**estination, `HH` gives the hours and `MM` gives the minutes
   - Once transmitted a time, the bike computer counts down the time independently until power down
   - you should regularly update the time to destination by sending a new time to destination command based on your navigation calculation
-   - Use ```sendTimeToDestination(seconds)``` to update time to destination. `seconds` are the seconds to destination (Google maps API provides time to destination this way)
+   - Use ```sendTimeToDestination(seconds)``` to send new time to destination from WebApp. `seconds` are the seconds to destination (Google maps API provides time to destination this way)
+    - Use ```receiveTimeToDestination(hh,mm)``` to receive new time to destination on Arduino. `hh` are the seconds to destination (Google maps API provides time to destination this way)
 - Time
   - `STX` `T` `HH` `MM` `ETX`
   - where `T` stands for time, `HH` gives the hours and `MM` gives the minutes
