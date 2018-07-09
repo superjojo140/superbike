@@ -1,8 +1,9 @@
-# What has to be transmitted?
-- Maneuver
-  - `STX` `M` `X` `ETX`
-  - where `M` stands for maneuver and `X` gives the id of the maneuver and the assigned arrow
+# Data transmisson from navigation app to bike computer
 
+- Step Description
+  - `STX` `M` `M-ID` `STEP MESSAGE` `ETX`
+  - where `M` stands for maneuver, `M-ID` gives the id of the maneuver and the assigned arrow and `STEP MESSAGE` gives the info text for this step
+  
 ID|maneuver
 --- | --- 
 0|TURN_LEFT
@@ -14,9 +15,16 @@ ID|maneuver
 6|STRAIGHT
 7|UTURN
 
-- Step Description
 - Time to destination
+  - `STX` `D` `HH` `MM` `ETX`
+  - where `D` stands for time to **d**estination, `HH` gives the hours and `MM` gives the minutes
+  - Once transmitted a time, the bike computer counts down the time independently until power down
+  - you should regularly update the time to destination by sending a new time to destination command based on your navigation calculation
 - Time
+  - `STX` `T` `HH` `MM` `ETX`
+  - where `T` stands for time, `HH` gives the hours and `MM` gives the minutes
+  - Once transmitted a time, the bike computer handles the time independently until power down
+  - You can overwrite the bike computer's time by sending a new time command
 - Speed
   - `STX` `S` `XX` `ETX`
   - where `S` stands for speed and `XX` gives the speed in km/h
