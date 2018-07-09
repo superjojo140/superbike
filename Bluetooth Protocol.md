@@ -3,6 +3,7 @@
 - Step Description
   - `STX` `M` `M-ID` `STEP MESSAGE` `ETX`
   - where `M` stands for maneuver, `M-ID` gives the id of the maneuver and the assigned arrow and `STEP MESSAGE` gives the info text for this step
+  - Use ```sendStepDescription(MID,stepMessage)``` to send a step Description
   
 ID|maneuver
 --- | --- 
@@ -20,6 +21,7 @@ ID|maneuver
   - where `D` stands for time to **d**estination, `HH` gives the hours and `MM` gives the minutes
   - Once transmitted a time, the bike computer counts down the time independently until power down
   - you should regularly update the time to destination by sending a new time to destination command based on your navigation calculation
+   - Use ```sendTimeToDestination(seconds)``` to update time to destination. `seconds` are the seconds to destination (Google maps API provides time to destination this way)
 - Time
   - `STX` `T` `HH` `MM` `ETX`
   - where `T` stands for time, `HH` gives the hours and `MM` gives the minutes
