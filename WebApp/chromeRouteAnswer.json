@@ -35,7 +35,49 @@
 }
 
 
-Instructions
+/***
+ *      _            _______       __  _      _   _  _____ 
+ *     | |        /\|__   __|     / / | |    | \ | |/ ____|
+ *     | |       /  \  | |       / /  | |    |  \| | |  __ 
+ *     | |      / /\ \ | |      / /   | |    | . ` | | |_ |
+ *     | |____ / ____ \| |     / /    | |____| |\  | |__| |
+ *     |______/_/    \_|_|    /_/     |______|_| \_|\_____|
+ *                                                         
+ *                                                         
+ */
+
+Auf <b>Sophienstraße</b> nach <b>Süden</b> Richtung <b>Wilhelmshöher Allee</b>
+superbike.js:173 
+superbike.js:174 Lat: 51.3127132
+superbike.js:175 Lng: 9.47976600000004
+superbike.js:176 Lat: 51.3127132
+superbike.js:177 Lng: 9.47976600000004
+superbike.js:172 <b>Rechts</b> abbiegen auf <b>Wilhelmshöher Allee</b>
+superbike.js:173 turn-right
+superbike.js:174 Lat: 51.311877
+superbike.js:175 Lng: 9.47994319999998
+superbike.js:176 Lat: 51.311877
+superbike.js:177 Lng: 9.47994319999998
+superbike.js:172 <b>Links</b> abbiegen auf <b>Willy-Brandt-Platz</b>
+superbike.js:173 turn-left
+superbike.js:174 Lat: 51.3135837
+superbike.js:175 Lng: 9.445816100000002
+superbike.js:176 Lat: 51.3135837
+superbike.js:177 Lng: 9.445816100000002
+
+
+
+/***
+ *      _____           _                   _   _                 
+ *     |_   _|         | |                 | | (_)                
+ *       | |  _ __  ___| |_ _ __ _   _  ___| |_ _  ___  _ __  ___ 
+ *       | | | '_ \/ __| __| '__| | | |/ __| __| |/ _ \| '_ \/ __|
+ *      _| |_| | | \__ | |_| |  | |_| | (__| |_| | (_) | | | \__ \
+ *     |_____|_| |_|___/\__|_|   \__,_|\___|\__|_|\___/|_| |_|___/
+ *                                                                
+ *                                                                
+ */
+
 
 Auf <b>Landstraße</b> nach <b>Süden</b> Richtung <b>Warburger Weg</b>
 
