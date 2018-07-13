@@ -1,15 +1,15 @@
-#Conversion between Coordinates and Meters
+# Conversion between Coordinates and Meters
 
-###Problem
+### Problem
 While the distance between one circle of latitude is nearly the same all over the world, the distance between one circle of longitude is very dependent of the latitude on this place.
 You can read more on https://www.kompf.de/gps/distcalc.html
 
-###Solution
+### Solution
 To solve this we use a special function to calculate distance between two coordinates:
 `distanceBetweenCoordinates(lat1,long1,lat2,lng2)` in `navigation.js`
 This function is inspired by https://www.andrerinas.de/tutorials/javascript-genaue-latlon-geokoordinaten-entfernungen-errechnen.html
 
-###Proportion of meters and degree
+### Proportion of meters and degree
 
 When defining distances in our step by step algorithm we want to define them in meters (not in degrees).
 
