@@ -1,6 +1,7 @@
 # Conversion between Coordinates and Meters
 
 ### Problem
+The HTML5 geolocation API and also Google Maps API provide positions in decimal coordinates. We want to show user instructions in meters (or kilometers). So we have to convert theese values.
 While the distance between one circle of latitude is nearly the same all over the world, the distance between one circle of longitude is very dependent of the latitude on this place.
 You can read more on https://www.kompf.de/gps/distcalc.html
 
