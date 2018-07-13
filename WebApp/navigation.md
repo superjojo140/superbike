@@ -9,11 +9,11 @@ To solve this we use a special function to calculate distance between two coordi
 `distanceBetweenCoordinates(lat1,long1,lat2,lng2)` in `navigation.js`
 This function is inspired by https://www.andrerinas.de/tutorials/javascript-genaue-latlon-geokoordinaten-entfernungen-errechnen.html
 
-### Proportion of meters and degree
+### Proportion of meters and degrees
 
 When defining distances in our step by step algorithm we want to define them in meters (not in degrees).
 
-So, it seems handy to roughly know the porportion of one meter to degrees in latitude and longitude.  
+So, it seems handy to roughly know the proportion of one meter to degrees in latitude and longitude.  
 
 
 
