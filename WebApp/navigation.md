@@ -6,10 +6,23 @@ You can read more on https://www.kompf.de/gps/distcalc.html
 
 ### Solution
 To solve this we use a special function to calculate distance between two coordinates:
-`distanceBetweenCoordinates(lat1,long1,lat2,lng2)` in `navigation.js`
+```javascript
+function distanceBetweenCoordinates( lat1, lng1, lat2, lng2 ) {
+	lat1 = Deg2Rad(lat1);
+	lat2 = Deg2Rad(lat2);
+	lng1 = Deg2Rad(lng1);
+	lng2 = Deg2Rad(lng2);
+	var R = 6371000; // earth's diameter in meter
+	var x = (lng2-lng1) * Math.cos((lat1+lat2)/2);
+	var y = (lat2-lat1);
+	var d = Math.sqrt(x*x + y*y) * R;
+	return d;
+}
+```
+This function takes the start and endpoint's coordinates in decimal degrees and returns the distance between theese points in meters. `Deg2Rad(x)` simply converts a value in degrees into a value in radians.
 This function is inspired by https://www.andrerinas.de/tutorials/javascript-genaue-latlon-geokoordinaten-entfernungen-errechnen.html
 
-### Proportion of meters and degrees
+### The other way around
 
 When defining distances in our step by step algorithm we want to define them in meters (not in degrees).
 
