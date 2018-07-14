@@ -101,8 +101,8 @@ function showSteps(directionResult, markerArray, stepDisplay, map) {
 	// For each step, place a marker, and add the text to the marker's infowindow.
 	// Also attach the marker to an array so we can keep track of it and remove it
 	// when calculating new routes.
-	console.log(directionResult);
-	printDirectionsResult(directionResult);
+	initRoute(directionResult);
+	//printDirectionsResult(directionResult);
 	var myRoute = directionResult.routes[0].legs[0];
 	for (var i = 0; i < myRoute.steps.length; i++) {
 		var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
