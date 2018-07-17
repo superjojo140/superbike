@@ -2,59 +2,73 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
-    <!-- Material Design for Bootstrap fonts and icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-    <!-- Material Design for Bootstrap CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="/assets/favicon.png">
+	<!-- Material Design for Bootstrap fonts and icons -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+	<!-- Material Design for Bootstrap CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
 	<!-- Sweet Alert CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" />
-    <link rel="stylesheet" href="superbike.css">
-    <title>Superbike</title>
+	<link rel="stylesheet" href="superbike.css">
+	<title>Superbike</title>
 </head>
 
 <body>
-    <div style="text-align: center;"><img src="assets/logo.png" class="logo"></div>
-    <br>
-    <div style="text-align: center;">
-        <button class="btn btn-outline btn-success" id="connectButton">Connect Bike Computer</button>
-        <input type="text" id="inputBT" class="form-control placeInput" placeholder="Nachricht eintippen"><button class="btn btn-info btn-raised" id="sendTextToBluetoothButton">Senden über Bluetooth</button>
-    </div> 
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 text-center">
+	<div style="text-align: center;"><img src="assets/logo.png" class="logo"></div>
+	<br>
+	<div style="text-align: center;">
+		<button class="btn btn-outline btn-success" id="connectButton">Connect Bike Computer</button>
+		<input type="text" id="inputBT" class="form-control placeInput" placeholder="Nachricht eintippen">
+		<button class="btn btn-info btn-raised" id="sendTextToBluetoothButton">Senden über Bluetooth</button>
+	</div>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4 text-center">
 			<button class="btn btn-raised btn-warning" id="showPositionButton">Position anzeigen</button>
 			<button class="btn btn-raised btn-warning" id="usePositionAsStartButton">Position als Start</button>
-            <form>
-                <div class="form-group">
-                    <label class="inputLabel">Start</label>
-                    <input type="text" class="form-control placeInput" id="startInput"> </div>
-                <div class="form-group">
-                    <label class="inputLabel">Ziel</label>
-                    <input type="text" class="form-control placeInput" id="endInput"> </div>
-                <button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
-            </form>
-        </div>
-    </div>
-    <div id="map"></div> &nbsp;
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+			<form>
+				<div class="form-group">
+					<label class="inputLabel">Start</label>
+					<input type="text" class="form-control placeInput" id="startInput"> </div>
+				<div class="form-group">
+					<label class="inputLabel">Ziel</label>
+					<input type="text" class="form-control placeInput" id="endInput"> </div>
+				<button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
+			</form>
+		</div>
+	</div>
+	<div id="map"></div> &nbsp;
+	<div id="infoBox"></div>
+	<form action="javascript:setConstants()">
+		<label>Maximale Trigger Zeit in Millisekunden</label>
+		<input type="number" id="maxTriggerInput">
+		<label>Trigger Faktor (je größer desto längere trigger zeiten)</label>
+		<input type="number" id="triggerFactorInput">
+		<label>KLeinster Radius, in dem ein Ort akzeptiert wird</label>
+		<input type="number" id="minRngeInput"> 
+		<label>Größter Radius, in dem ein Ort akzeptiert wird</label>
+		<input type="number" id="maxRangeInput"> 
+		<label>Faktor für den Radius, in dem ein Ort akzeptiert wird</label>
+		<input type="number" id="factorRangeInput"> 
+	<button onclick="setConstants()">Speichern</button></form>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('body').bootstrapMaterialDesign();
-        });
-    </script>
-    <script src="superbike.js"></script>
-    <script src="navigation.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoUuz4_bjxFrTFUxmN3iYEVXvj4VFHt40&libraries=places&callback=initMap">
-    </script>
+	<script>
+		$(document).ready(function () {
+			$('body').bootstrapMaterialDesign();
+		});
+	</script>
+	<script src="superbike.js"></script>
+	<script src="navigation.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoUuz4_bjxFrTFUxmN3iYEVXvj4VFHt40&libraries=places&callback=initMap">
+	</script>
 </body>
 
 </html>

@@ -1,4 +1,3 @@
-
 /***
  *       _____ _       _           _  __      __        _       _     _           
  *      / ____| |     | |         | | \ \    / /       (_)     | |   | |          
@@ -10,7 +9,6 @@
  *                                                                                
  */
 var myRoute;
-
 /***
  *       _____                _              _       
  *      / ____|              | |            | |      
@@ -21,11 +19,29 @@ var myRoute;
  *                                                   
  *                                                   
  */
+var MAX_RANGE_TO_ACCEPT_POSITION = 100; //meter
+var MIN_RANGE_TO_ACCEPT_POSITION = 15; //meter
+var RANGE_TO_ACCEPT_FACTOR = 20;
+var NEXT_TRIGGER_TIME = 10;
+var MAX_TRIGGER_TIME = 10000 //10 seconds
+$("#maxTriggerInput").val(MAX_TRIGGER_TIME);
+$("#triggerFactorInput").val(NEXT_TRIGGER_TIME);
+$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
+$("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
+$("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
 
-const RANGE_TO_ACCEPT_POSITION = 50 //meter
-const NEXT_TRIGGER_TIME = 50;
-const MAX_TRIGGER_TIME = 30000 //30 seconds
-
+function setConstants() {
+	MAX_TRIGGER_TIME = $("#maxTriggerInput").val();
+	NEXT_TRIGGER_TIME = $("#triggerFactorInput").val();
+	MAX_RANGE_TO_ACCEPT_POSITION = $("#maxRangeInput").val();
+	MIN_RANGE_TO_ACCEPT_POSITION = $("#minRangeInput").val();
+	RANGE_TO_ACCEPT_FACTOR = $("#factorRangeInput").val();
+	$("#maxTriggerInput").val(MAX_TRIGGER_TIME);
+	$("#triggerFactorInput").val(NEXT_TRIGGER_TIME);
+	$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
+	$("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
+	$("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
+}
 /***
  *      _____  _     _                          _____      _            _       _   _             
  *     |  __ \(_)   | |                        / ____|    | |          | |     | | (_)            
@@ -36,7 +52,6 @@ const MAX_TRIGGER_TIME = 30000 //30 seconds
  *                                                                                                
  *                                                                                                
  */
-
 //Convert angle from Degree to Radial
 function Deg2Rad(deg) {
 	return deg * Math.PI / 180;
@@ -60,7 +75,6 @@ function distanceBetweenCoordinates(lat1, lng1, lat2, lng2) {
 	var d = Math.sqrt(x * x + y * y) * R;
 	return d;
 }
-
 /***
  *       _____ _               _              _____ _             
  *      / ____| |             | |            / ____| |            
@@ -71,10 +85,9 @@ function distanceBetweenCoordinates(lat1, lng1, lat2, lng2) {
  *                    | |             __/ |                | |    
  *                    |_|            |___/                 |_|    
  */
-
-	/*
-	 *@param route Object Google Maps Directions request object
-	 */
+/*
+ *@param route Object Google Maps Directions request object
+ */
 function initRoute(requestObject) {
 	myRoute = requestObject.routes[0].legs[0];
 	//
@@ -92,16 +105,21 @@ function initRoute(requestObject) {
 	//Route is now initialised
 	myRoute.inititalised = true;
 	console.log(myRoute);
+	//Start Step by step algorithm
+	getLocation(handleNewPosition);
 }
 
 function handleNewPosition(newPosition) {
 	//check wether route is initialised
-	if (!myRoute.inititalised){
+	if (!myRoute.inititalised) {
 		throw "Route not initialised";
 	}
 	//convert new Position to {lat:lat,lng:lng} format
 	//
-	newPosition = {lat: newPosition.coords.latitude, lng: newPosition.coords.longitude};
+	newPosition = {
+		lat: newPosition.coords.latitude
+		, lng: newPosition.coords.longitude
+	};
 	//
 	//save values from last iteration
 	var oldValues = myRoute.currentValues;
@@ -118,27 +136,38 @@ function handleNewPosition(newPosition) {
 		//If there is no old position (for example at the first iteration)
 		newSpeed = 0;
 	}
+	
+	
 	//
 	//Calculate Range and current step's position
-	var currentRange = RANGE_TO_ACCEPT_POSITION; //Maybe add some magic calculation here for better range
 	var currentStep = myRoute.steps[oldValues.currentStepIndex];
 	var currentStepPosition = {
 		lat: currentStep.end_location.lat()
-		, lng currentStep.end_location.lng()
+		, lng: currentStep.end_location.lng()
 	};
 	//
-	//Calculate new Distance to destination
-	var newDistanceToDestination = distanceToPosition(newPosition, currentStepsPosition, currentRange);
+	var distanceCurrentStep = distanceBetweenCoordinates(currentStep.end_location.lat(),currentStep.end_location.lng(),currentStep.start_location.lat(),currentStep.start_location.lng());
+	var nextStep = myRoute.steps[oldValues.currentStepIndex+1];
+	var distanceNextStep = distanceBetweenCoordinates(nextStep.end_location.lat(),nextStep.end_location.lng(),nextStep.start_location.lat(),nextStep.start_location.lng());
+	var currentRange = Math.min(distanceCurrentStep,distanceNextStep) / RANGE_TO_ACCEPT_FACTOR;
+	
+	
 	//
+	//Calculate new Distance to destination
+	var newDistanceToDestination = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, currentStepPosition.lat, currentStepPosition.lng);
 	//Calculate new step index
 	var newStepIndex;
-	if (newDistanceToDestination == 0) {
+	if (newDistanceToDestination < currentRange) {
 		//reached step's end_location
 		newStepIndex = oldValues.currentStepIndex + 1;
 	}
 	else {
 		newStepIndex = oldValues.currentStepIndex;
 	}
+	//
+	//Calculate time (in milliseconds) till next handleNewPosition iteration
+	//If the distance to destination == 0 the next iteration should be triggered instantly (after 0 milliseconds), else it should be a shorter time if the distanceToDestination is smaller or the speed is higher
+	var nextTriggerTime = Math.min(newDistanceToDestination * NEXT_TRIGGER_TIME / Math.max(1, newSpeed), MAX_TRIGGER_TIME); //use max(1,speed) to avoid dividing by zero
 	//
 	//Set new Values
 	var newValues = {
@@ -147,6 +176,7 @@ function handleNewPosition(newPosition) {
 		, position: newPosition
 		, currentStepIndex: newStepIndex
 		, distanceToDestination: newDistanceToDestination
+		, nextTriggerTime: nextTriggerTime
 	}
 	myRoute.currentValues = newValues;
 	//
@@ -156,38 +186,48 @@ function handleNewPosition(newPosition) {
 		//Reached the final destination
 		finalDestinationReached();
 	}
-	else{
+	else {
 		//Check wether we are still on the right way
-		if(stillOnTheRightWay() == false){
+		if (stillOnTheRightWay() == false) {
 			//do something good ;-) TODO implement
 		}
+		//
 		//Not yet reached final destination
 		//Write new values to screen
 		//
 		writeRouteValuesToScreen(newValues);
 		//
-		//Calculate time (in milliseconds) till next handleNewPosition iteration
-		//If the distance to destination == 0 the next iteration should be triggered instantly (after 0 milliseconds), else it should be a shorter time if the distanceToDestination is smaller or the speed is higher
-		var nextTriggerTime = Math.min(newDistanceToDestination * NEXT_TRIGGER_TIME / Math.max(1,newSpeed), MAX_TRIGGER_TIME); //use max(1,speed) to avoid dividing by zero
-		setTimeout(function(){getLocation(handleNewPosition)},nextTriggerTime);
+		//trigger next iteration
+		setTimeout(function () {
+			getLocation(handleNewPosition)
+		}, nextTriggerTime);
 	}
 }
-
-
 /*
  *@param currentPosition Your current geolocation
  *@param destinationPosition Position of your destination
  *@param {number} range range in meters
- *@return {number} 0 if the current position is withun the range of the destination's position, else: distance to destination
+ *@return {number} 0 if the current position is within the range of the destination's position, else: distance to destination
  */
 function distanceToPosition(currentPosition, destinationPosition, range) {
-	//Todo Implement
+	//check wether route is initialised
+	if (!myRoute.inititalised) {
+		throw "Route not initialised";
+	}
+	var rangeLat = myRoute.oneMeterInLatitudeDegrees * range;
+	var rangeLng = myRoute.oneMeterInLongitudeDegrees * range;
+	if (currentPosition.lng < destinationPosition.lng + rangeLng && currentPosition.lng > destinationPosition.lng - rangeLng && currentPosition.lat < destinationPosition.lat + rangeLat && currentPosition.lat > destinationPosition.lat - rangeLat) {
+		//Current Position is withun range of destination Position
+		return 0;
+	}
+	else return distanceBetweenCoordinates(currentPosition.lat, currentPosition.lng, destinationPosition.lat, destinationPosition.lng);
 }
 
-function finalDestinationReached(){
+function finalDestinationReached() {
 	//TODO implement
+	swal("Juchuu!", "Du bist angekommen.", "success");
 }
 
-function stillOnTheRightWay(){return true;} //TODO Implement
-
-
+function stillOnTheRightWay() {
+	return true;
+} //TODO Implement
