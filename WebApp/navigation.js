@@ -134,7 +134,7 @@ function handleNewPosition(newPosition) {
 	//Calculate new speed
 	var newSpeed;
 	if (oldValues.position) { //Check wether an old position is set
-		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / (newTimestamp - oldValues.timestamp) / 1000; // /1000 to get speed in m/s instead of m/ms
+		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000); // /1000 to get speed in m/s instead of m/ms
 	}
 	else {
 		//If there is no old position (for example at the first iteration)
@@ -193,7 +193,10 @@ function handleNewPosition(newPosition) {
 	else {
 		//Check wether we are still on the right way
 		if (stillOnTheRightWay() == false) {
-			//do something good ;-) TODO implement
+			swal("Ooooops","You're on the wrong way","error");
+			//Set current position as new start
+			getLocation(setCurrentLocationAsStart);
+			calculateAndDisplayRoute();
 		}
 		//
 		//Not yet reached final destination
@@ -248,7 +251,7 @@ function stillOnTheRightWay() {
 	}
 	var rangeLat = myRoute.oneMeterInLatitudeDegrees * WRONG_WAY_RANGE;
 	var rangeLng = myRoute.oneMeterInLongitudeDegrees * WRONG_WAY_RANGE;
-	if (currentPosition.lng < mostRightLng + rangeLng && currentPosition.lng > mostLeftLng - rangeLng && currentPosition.lat < mostUpLat + rangeLat && currentPosition.lat > mostDowmLat - rangeLat) {
+	if (currentPosition.lng < mostRightLng + rangeLng && currentPosition.lng > mostLeftLng - rangeLng && currentPosition.lat < mostUpLat + rangeLat && currentPosition.lat > mostDownLat - rangeLat) {
 		//Current Position is within range of the steps line
 		return true;
 	}

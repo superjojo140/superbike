@@ -12,6 +12,15 @@ var enc = new TextEncoder(); // always utf-8
 //Bluetooth API Connection
 var bluetoothConnection;
 var geocoder;
+
+//Google Maps Globals
+var markerArray;
+var directionsService;
+var directionsDisplay;
+var stepDisplay;
+var map;
+
+
 /***
  *      ______               _     ____  _           _ _             
  *     |  ____|             | |   |  _ \(_)         | (_)            
@@ -41,11 +50,11 @@ $("#usePositionAsStartButton").click(function () {
  *                         |___/                      |_|        
  */
 function initMap() {
-	var markerArray = [];
+	markerArray = [];
 	// Instantiate a directions service.
-	var directionsService = new google.maps.DirectionsService;
+	directionsService = new google.maps.DirectionsService;
 	// Create a map and center it on Manhattan.
-	var map = new google.maps.Map(document.getElementById('map'), {
+	map = new google.maps.Map(document.getElementById('map'), {
 		zoom: 13
 		, center: {
 			lat: 40.771
@@ -53,18 +62,16 @@ function initMap() {
 		}
 	});
 	// Create a renderer for directions and bind it to the map.
-	var directionsDisplay = new google.maps.DirectionsRenderer({
+	directionsDisplay = new google.maps.DirectionsRenderer({
 		map: map
 	});
 	// Instantiate an info window to hold step text.
-	var stepDisplay = new google.maps.InfoWindow;
+	stepDisplay = new google.maps.InfoWindow;
 	// Display the route between the initial start and end selections.
 	//calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
 	// Listen to change events from the start and end lists.
-	var onChangeHandler = function () {
-		calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
-	};
-	document.getElementById("calculateRouteButton").onclick = onChangeHandler;
+	
+	document.getElementById("calculateRouteButton").onclick = calculateAndDisplayRoute;
 	//Autocomplete inputs
 	var autocompleteStart = new google.maps.places.Autocomplete(startInput);
 	var autocompleteEnd = new google.maps.places.Autocomplete(endInput);
@@ -72,7 +79,7 @@ function initMap() {
 	geocoder = new google.maps.Geocoder;
 }
 
-function calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map) {
+function calculateAndDisplayRoute() {
 	// First, remove any existing markers from the map.
 	for (var i = 0; i < markerArray.length; i++) {
 		markerArray[i].setMap(null);
