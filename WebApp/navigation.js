@@ -24,6 +24,8 @@ var MIN_RANGE_TO_ACCEPT_POSITION = 15; //meter
 var RANGE_TO_ACCEPT_FACTOR = 20;
 var NEXT_TRIGGER_TIME = 10;
 var MAX_TRIGGER_TIME = 10000 //10 seconds
+var WRONG_WAY_RANGE = 100 //meter
+$("#wrongWayRange").val(WRONG_WAY_RANGE);
 $("#maxTriggerInput").val(MAX_TRIGGER_TIME);
 $("#triggerFactorInput").val(NEXT_TRIGGER_TIME);
 $("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
@@ -31,11 +33,13 @@ $("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
 $("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
 
 function setConstants() {
+	WRONG_WAY_RANGE = $("#wrongWayRange").val();
 	MAX_TRIGGER_TIME = $("#maxTriggerInput").val();
 	NEXT_TRIGGER_TIME = $("#triggerFactorInput").val();
 	MAX_RANGE_TO_ACCEPT_POSITION = $("#maxRangeInput").val();
 	MIN_RANGE_TO_ACCEPT_POSITION = $("#minRangeInput").val();
 	RANGE_TO_ACCEPT_FACTOR = $("#factorRangeInput").val();
+	$("#wrongWayRange").val(WRONG_WAY_RANGE);
 	$("#maxTriggerInput").val(MAX_TRIGGER_TIME);
 	$("#triggerFactorInput").val(NEXT_TRIGGER_TIME);
 	$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
@@ -229,5 +233,26 @@ function finalDestinationReached() {
 }
 
 function stillOnTheRightWay() {
-	return true;
-} //TODO Implement
+	//check wether route is initialised
+	let currentPosition = myRoute.currentValues.position;
+	let endLocation = myRoute.steps[myRoute.currentValues.currentStepIndex].end_location;
+	let startLocation = myRoute.steps[myRoute.currentValues.currentStepIndex].start_location;
+	//
+	let mostLeftLng = Math.min(endLocation.lng(),startLocation.lng());
+	let mostRightLng = Math.max(endLocation.lng(),startLocation.lng());
+	let mostDownLat = Math.min(endLocation.lat(),startLocation.lat());
+	let mostUpLat = Math.max(endLocation.lat(),startLocation.lat());
+	
+	if (!myRoute.inititalised) {
+		throw "Route not initialised";
+	}
+	var rangeLat = myRoute.oneMeterInLatitudeDegrees * WRONG_WAY_RANGE;
+	var rangeLng = myRoute.oneMeterInLongitudeDegrees * WRONG_WAY_RANGE;
+	if (currentPosition.lng < mostRightLng + rangeLng && currentPosition.lng > mostLeftLng - rangeLng && currentPosition.lat < mostUpLat + rangeLat && currentPosition.lat > mostDowmLat - rangeLat) {
+		//Current Position is within range of the steps line
+		return true;
+	}
+	else{
+		return false;
+	}
+} 
