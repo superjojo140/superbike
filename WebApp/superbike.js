@@ -206,12 +206,15 @@ function writeRouteValuesToScreen(values){
 	console.log(values);
 	var box = $("#infoBox");
 	box.html("");
-	box.append("<table><th><td>key</td><td>value</td></th>");
+	box.append("<table class='table table-striped'>");
 	box.append("<tr><td>Speed</td><td>" + Math.round(values.speed) + " m/s</td></tr>");
-	box.append("<tr><td>Distance to Destination</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>");
+	box.append("<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>");
+	box.append("<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>");
 	box.append("<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex+1].instructions + "</td></tr>");
 	box.append("<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex].maneuver + "</td></tr>");
-	box.append("<tr><td>Next trigger in</td><td>" + Math.round(values.nextTriggerTime/1000) + " s</td></tr>");
+	box.append("<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime/1000) + " s</td></tr>");
+	box.append("</table>");
+	
 	
 }
 /*

@@ -136,8 +136,6 @@ function handleNewPosition(newPosition) {
 		//If there is no old position (for example at the first iteration)
 		newSpeed = 0;
 	}
-	
-	
 	//
 	//Calculate Range and current step's position
 	var currentStep = myRoute.steps[oldValues.currentStepIndex];
@@ -146,12 +144,13 @@ function handleNewPosition(newPosition) {
 		, lng: currentStep.end_location.lng()
 	};
 	//
-	var distanceCurrentStep = distanceBetweenCoordinates(currentStep.end_location.lat(),currentStep.end_location.lng(),currentStep.start_location.lat(),currentStep.start_location.lng());
-	var nextStep = myRoute.steps[oldValues.currentStepIndex+1];
-	var distanceNextStep = distanceBetweenCoordinates(nextStep.end_location.lat(),nextStep.end_location.lng(),nextStep.start_location.lat(),nextStep.start_location.lng());
-	var currentRange = Math.min(distanceCurrentStep,distanceNextStep) / RANGE_TO_ACCEPT_FACTOR;
-	
-	
+	var distanceCurrentStep = distanceBetweenCoordinates(currentStep.end_location.lat(), currentStep.end_location.lng(), currentStep.start_location.lat(), currentStep.start_location.lng());
+	var nextStep = myRoute.steps[oldValues.currentStepIndex + 1];
+	var distanceNextStep = distanceBetweenCoordinates(nextStep.end_location.lat(), nextStep.end_location.lng(), nextStep.start_location.lat(), nextStep.start_location.lng());
+	var currentRange = Math.min(distanceCurrentStep, distanceNextStep) / RANGE_TO_ACCEPT_FACTOR;
+	//MIN_RANGE and MAX_RANGE
+	currentRange = Math.min(currentRange,MAX_RANGE_TO_ACCEPT_POSITION);
+	currentRange = Math.max(currentRange,MIN_RANGE_TO_ACCEPT_POSITION);
 	//
 	//Calculate new Distance to destination
 	var newDistanceToDestination = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, currentStepPosition.lat, currentStepPosition.lng);
@@ -177,6 +176,7 @@ function handleNewPosition(newPosition) {
 		, currentStepIndex: newStepIndex
 		, distanceToDestination: newDistanceToDestination
 		, nextTriggerTime: nextTriggerTime
+		, currentRange: currentRange
 	}
 	myRoute.currentValues = newValues;
 	//
