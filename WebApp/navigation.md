@@ -17,7 +17,7 @@ function distanceBetweenCoordinates( lat1, lng1, lat2, lng2 ) {
 	var x = (lng2-lng1) * Math.cos((lat1+lat2)/2);
 	var y = (lat2-lat1);
 	var d = Math.sqrt(x*x + y*y) * R;
-	return d;
+	return d; 
 }
 ```
 This function takes the start and endpoint's coordinates in decimal degrees and returns the distance between theese points in meters. `Deg2Rad(x)` simply converts a value in degrees into a value in radians.

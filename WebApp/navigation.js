@@ -104,6 +104,7 @@ function initRoute(requestObject) {
 	//Set first step as startpoint
 	myRoute.currentValues = {
 		currentStepIndex: 0
+		, stepReached: false
 	};
 	//
 	//Route is now initialised
@@ -125,6 +126,16 @@ function handleNewPosition(newPosition) {
 		, lng: newPosition.coords.longitude
 	};
 	//
+	//showCurrentPositionMarker
+	if (currentPositionMarker) {
+		currentPositionMarker.setMap(null);
+	}
+	currentPositionMarker = new google.maps.Marker({
+		position: newPosition
+		, map: map
+		, title: 'Deine Position'
+	});
+	//
 	//save values from last iteration
 	var oldValues = myRoute.currentValues;
 	//
@@ -141,31 +152,41 @@ function handleNewPosition(newPosition) {
 		newSpeed = 0;
 	}
 	//
-	//Calculate Range and current step's position
+	//current step's position
 	var currentStep = myRoute.steps[oldValues.currentStepIndex];
 	var currentStepPosition = {
 		lat: currentStep.end_location.lat()
 		, lng: currentStep.end_location.lng()
 	};
 	//
+	//Current Range
 	var distanceCurrentStep = distanceBetweenCoordinates(currentStep.end_location.lat(), currentStep.end_location.lng(), currentStep.start_location.lat(), currentStep.start_location.lng());
 	var nextStep = myRoute.steps[oldValues.currentStepIndex + 1];
 	var distanceNextStep = distanceBetweenCoordinates(nextStep.end_location.lat(), nextStep.end_location.lng(), nextStep.start_location.lat(), nextStep.start_location.lng());
 	var currentRange = Math.min(distanceCurrentStep, distanceNextStep) / RANGE_TO_ACCEPT_FACTOR;
 	//MIN_RANGE and MAX_RANGE
-	currentRange = Math.min(currentRange,MAX_RANGE_TO_ACCEPT_POSITION);
-	currentRange = Math.max(currentRange,MIN_RANGE_TO_ACCEPT_POSITION);
+	currentRange = Math.min(currentRange, MAX_RANGE_TO_ACCEPT_POSITION);
+	currentRange = Math.max(currentRange, MIN_RANGE_TO_ACCEPT_POSITION);
 	//
 	//Calculate new Distance to destination
 	var newDistanceToDestination = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, currentStepPosition.lat, currentStepPosition.lng);
 	//Calculate new step index
 	var newStepIndex;
+	var newStepReached;
 	if (newDistanceToDestination < currentRange) {
 		//reached step's end_location
-		newStepIndex = oldValues.currentStepIndex + 1;
+		newStepReached = true;
+		newStepIndex = oldValues.currentStepIndex;
 	}
 	else {
-		newStepIndex = oldValues.currentStepIndex;
+		if (oldValues.stepReached) {
+			//Range of the step's end point leaved -> next step is diplayed'
+			newStepReached = false;
+			newStepIndex = oldValues.currentStepIndex + 1;
+		}
+		else {
+			newStepIndex = oldValues.currentStepIndex;
+		}
 	}
 	//
 	//Calculate time (in milliseconds) till next handleNewPosition iteration
@@ -181,6 +202,7 @@ function handleNewPosition(newPosition) {
 		, distanceToDestination: newDistanceToDestination
 		, nextTriggerTime: nextTriggerTime
 		, currentRange: currentRange
+		, stepReached: newStepReached
 	}
 	myRoute.currentValues = newValues;
 	//
@@ -193,7 +215,7 @@ function handleNewPosition(newPosition) {
 	else {
 		//Check wether we are still on the right way
 		if (stillOnTheRightWay() == false) {
-			swal("Ooooops","You're on the wrong way","error");
+			swal("Ooooops", "You're on the wrong way", "error");
 			//Set current position as new start
 			getLocation(setCurrentLocationAsStart);
 			calculateAndDisplayRoute();
@@ -241,11 +263,10 @@ function stillOnTheRightWay() {
 	let endLocation = myRoute.steps[myRoute.currentValues.currentStepIndex].end_location;
 	let startLocation = myRoute.steps[myRoute.currentValues.currentStepIndex].start_location;
 	//
-	let mostLeftLng = Math.min(endLocation.lng(),startLocation.lng());
-	let mostRightLng = Math.max(endLocation.lng(),startLocation.lng());
-	let mostDownLat = Math.min(endLocation.lat(),startLocation.lat());
-	let mostUpLat = Math.max(endLocation.lat(),startLocation.lat());
-	
+	let mostLeftLng = Math.min(endLocation.lng(), startLocation.lng());
+	let mostRightLng = Math.max(endLocation.lng(), startLocation.lng());
+	let mostDownLat = Math.min(endLocation.lat(), startLocation.lat());
+	let mostUpLat = Math.max(endLocation.lat(), startLocation.lat());
 	if (!myRoute.inititalised) {
 		throw "Route not initialised";
 	}
@@ -255,7 +276,7 @@ function stillOnTheRightWay() {
 		//Current Position is within range of the steps line
 		return true;
 	}
-	else{
+	else {
 		return false;
 	}
-} 
+}

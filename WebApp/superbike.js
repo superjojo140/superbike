@@ -12,15 +12,13 @@ var enc = new TextEncoder(); // always utf-8
 //Bluetooth API Connection
 var bluetoothConnection;
 var geocoder;
-
 //Google Maps Globals
 var markerArray;
 var directionsService;
 var directionsDisplay;
 var stepDisplay;
 var map;
-
-
+var currentPositionMarker;
 /***
  *      ______               _     ____  _           _ _             
  *     |  ____|             | |   |  _ \(_)         | (_)            
@@ -70,13 +68,14 @@ function initMap() {
 	// Display the route between the initial start and end selections.
 	//calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
 	// Listen to change events from the start and end lists.
-	
 	document.getElementById("calculateRouteButton").onclick = calculateAndDisplayRoute;
 	//Autocomplete inputs
 	var autocompleteStart = new google.maps.places.Autocomplete(startInput);
 	var autocompleteEnd = new google.maps.places.Autocomplete(endInput);
 	//Set geocoder
 	geocoder = new google.maps.Geocoder;
+	//Set marker for current Position
+	
 }
 
 function calculateAndDisplayRoute() {
@@ -171,7 +170,7 @@ function connectToBluetoothDevice() {
 
 function sendToBluetooth() {
 	if (!bluetoothConnection) {
-		swal("Nicht verbunden","Bitte verbinde dich zuerst mit deinem Bike Computer","error");
+		swal("Nicht verbunden", "Bitte verbinde dich zuerst mit deinem Bike Computer", "error");
 	}
 	else {
 		var arrayBuff = document.getElementById("inputBT").value;
@@ -194,8 +193,6 @@ function printDirectionsResult(dr) {
 		console.log("Lng: " + ar[i].start_point.lng());
 	}
 }
-
-
 /***
  *      _____                                _____                            _____        __      
  *     |  __ \                              / ____|                          |_   _|      / _|     
@@ -206,23 +203,19 @@ function printDirectionsResult(dr) {
  *                                                                                                 
  *                                                                                                 
  */
-
-
-function writeRouteValuesToScreen(values){
- //TODO implement
+function writeRouteValuesToScreen(values) {
+	//TODO implement
 	console.log(values);
 	var box = $("#infoBox");
 	box.html("");
 	box.append("<table class='table table-striped'>");
-	box.append("<tr><td>Speed</td><td>" + Math.round(values.speed) + " m/s</td></tr>");
+	box.append("<tr><td>Speed</td><td>" + Math.round(values.speed * 3.6) + " km/h</td></tr>");
 	box.append("<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>");
 	box.append("<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>");
-	box.append("<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex+1].instructions + "</td></tr>");
+	box.append("<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>");
 	box.append("<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex].maneuver + "</td></tr>");
-	box.append("<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime/1000) + " s</td></tr>");
+	box.append("<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime / 1000) + " s</td></tr>");
 	box.append("</table>");
-	
-	
 }
 /*
 
