@@ -35,7 +35,10 @@ $("#showPositionButton").click(function () {
 	getLocation(alertPosition)
 });
 $("#usePositionAsStartButton").click(function () {
-	getLocation(setCurrentLocationAsStart)
+	getLocation(showCurrentAdress)
+});
+$("#calculateRouteButton").click(function () {
+	getLocation(calculateAndDisplayRoute)
 });
 /***
  *       _____                   _        __  __                 
@@ -66,27 +69,27 @@ function initMap() {
 	// Instantiate an info window to hold step text.
 	stepDisplay = new google.maps.InfoWindow;
 	// Display the route between the initial start and end selections.
-	//calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
-	// Listen to change events from the start and end lists.
-	document.getElementById("calculateRouteButton").onclick = calculateAndDisplayRoute;
 	//Autocomplete inputs
-	var autocompleteStart = new google.maps.places.Autocomplete(startInput);
 	var autocompleteEnd = new google.maps.places.Autocomplete(endInput);
 	//Set geocoder
 	geocoder = new google.maps.Geocoder;
 	//Set marker for current Position
-	
 }
 
-function calculateAndDisplayRoute() {
+function calculateAndDisplayRoute(startPosition) {
 	// First, remove any existing markers from the map.
 	for (var i = 0; i < markerArray.length; i++) {
 		markerArray[i].setMap(null);
 	}
 	// Retrieve the start and end locations and create a DirectionsRequest using
-	// WALKING directions.
+	//Converting the start Position
+	startPosition = {
+		lat: startPosition.coords.latitude
+		, lng: startPosition.coords.longitude
+	};
+	// BIYCYCLING directions.
 	directionsService.route({
-		origin: document.getElementById('startInput').value
+		origin: startPosition
 		, destination: document.getElementById('endInput').value
 		, travelMode: 'BICYCLING'
 	}, function (response, status) {
@@ -228,7 +231,7 @@ function writeRouteValuesToScreen(values) {
                                                                           
                                                                           
 */
-function setCurrentLocationAsStart(position) {
+function showCurrentAdress(position) {
 	var latlng = {
 		lat: position.coords.latitude
 		, lng: position.coords.longitude
@@ -239,7 +242,7 @@ function setCurrentLocationAsStart(position) {
 		if (status === 'OK') {
 			if (results[0]) {
 				swal("Wir haben dich gefunden", results[0].formatted_address, "success");
-				$("#startInput").val(results[0].formatted_address);
+				//$("#startInput").val(results[0].formatted_address);
 			}
 			else {
 				swal("Wo bist du denn?", 'Wir konnten deinen Standort zwar finden, aber keiner Startadresse zuordnen.', "error");

@@ -217,8 +217,7 @@ function handleNewPosition(newPosition) {
 		if (stillOnTheRightWay() == false) {
 			swal("Ooooops", "You're on the wrong way", "error");
 			//Set current position as new start
-			getLocation(setCurrentLocationAsStart);
-			calculateAndDisplayRoute();
+			getLocation(calculateAndDisplayRoute);
 		}
 		//
 		//Not yet reached final destination

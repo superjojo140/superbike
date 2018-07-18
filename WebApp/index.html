@@ -27,18 +27,14 @@
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4 text-center">
-			<button class="btn btn-raised btn-warning" id="showPositionButton">Position anzeigen</button>
-			<button class="btn btn-raised btn-warning" id="usePositionAsStartButton">Position als Start</button>
+			<button class="btn btn-raised btn-warning" id="showPositionButton">Position in Koordinaten anzeigen</button>
+			<button class="btn btn-raised btn-warning" id="usePositionAsStartButton">Position als als Adresse anzeigen</button>
 			<form>
-				<div class="form-group">
-					<label class="inputLabel">Start</label>
-					<input type="text" class="form-control placeInput" id="startInput"> </div>
-				<div class="form-group">
-					<label class="inputLabel">Ziel</label>
-					<input type="text" class="form-control placeInput" id="endInput"> </div>
-				<button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
-			</form>
-		</div>
+				<label class="inputLabel">Ziel</label>
+				<input type="text" class="form-control placeInput" id="endInput"> </div>
+		<button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
+		</form>
+	</div>
 	</div>
 	<div id="map"></div> &nbsp;
 	<div id="infoBox"></div>
@@ -48,14 +44,15 @@
 		<label>Trigger Faktor (je größer desto längere trigger zeiten)</label>
 		<input type="number" id="triggerFactorInput">
 		<label>Kleinster Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="minRangeInput"> 
+		<input type="number" id="minRangeInput">
 		<label>Größter Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="maxRangeInput"> 
+		<input type="number" id="maxRangeInput">
 		<label>Faktor für den Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="factorRangeInput"> 
+		<input type="number" id="factorRangeInput">
 		<label>Entfernung, bis ein Abkommen von der Strecke erkannt wird (in Metern)</label>
-		<input type="number" id="wrongWayRange"> 
-	<button onclick="setConstants()">Speichern</button></form>
+		<input type="number" id="wrongWayRange">
+		<button onclick="setConstants()">Speichern</button>
+	</form>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
