@@ -13,49 +13,90 @@
 	<!-- Sweet Alert CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" />
 	<link rel="stylesheet" href="superbike.css">
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title>Superbike</title>
 </head>
 
 <body>
-	<div style="text-align: center;"><img src="assets/logo.png" class="logo"></div>
+	<!-- Modal for Settings -->
+	<div class="modal fade" tabindex="-1" role="dialog" id="naviSettingsModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="alert alert-primary text-center" role="alert" style="width: 100%;"> Navi Einstellungen </div>
+				</div>
+				<div class="modal-body">
+					<form action="javascript:setConstants()">
+						<div class="inputGroup">
+							<label>Maximale Zeit bis zur nächsten GPS Abfrage:</label>
+							<input type="number" id="maxTriggerInput" class="form-control"> <small class="form-text text-muted">In Millisekunden</small></div>
+						<br>
+						<br>
+						<div class="inputGroup">
+							<label>Trigger Faktor:</label>
+							<input type="number" id="triggerFactorInput" class="form-control"> <small class="form-text text-muted">Je größer, desto längere Trigger Zeiten</small></div>
+						<br>
+						<br>
+						<div class="inputGroup">
+							<label>Kleinster Radius, in dem ein Ort akzeptiert wird:</label>
+							<input type="number" id="minRangeInput" class="form-control"> </div>
+						<br>
+						<br>
+						<div class="inputGroup">
+							<label>Größter Radius, in dem ein Ort akzeptiert wird:</label>
+							<input type="number" id="maxRangeInput" class="form-control"> </div>
+						<br>
+						<br>
+						<div class="inputGroup">
+							<label>Faktor für den Radius, in dem ein Ort akzeptiert wird:</label>
+							<input type="number" id="factorRangeInput" class="form-control"><small class="form-text text-muted">Je größer, desto kleinere Radien</small> </div>
+						<br>
+						<br>
+						<div class="inputGroup">
+							<label>Entfernung, bis ein Abkommen von der Strecke erkannt wird:</label>
+							<input type="number" id="wrongWayRange" class="form-control"><small class="form-text text-muted">In Metern</small> </div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+					<button type="button" class="btn btn-success btn-raised" id="saveNaviSettingsButton" data-dismiss="modal">Speichern</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Main Page -->
+	<nav class="navbar navbar-light bg-light">
+		<img src="assets/logo.png" width="200px" class="logo">
+		<button type="button" title="Debug Modus" class="btn btn-warning btn-raised" id="toggleDebugModeButton"><i class="material-icons">bug_report</i> </button>
+		<button type="button" title="Einstellungen" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#naviSettingsModal"><i class="material-icons">settings</i> </button>
+	</nav>
 	<br>
 	<div style="text-align: center;">
 		<button class="btn btn-outline btn-success" id="connectButton">Connect Bike Computer</button>
-		<input type="text" id="inputBT" class="form-control placeInput" placeholder="Nachricht eintippen">
-		<button class="btn btn-info btn-raised" id="sendTextToBluetoothButton">Senden über Bluetooth</button>
+		<br>
+		<input type="text" id="inputBT" class="form-control placeInput debug" placeholder="Nachricht eintippen">
+		<button class="btn btn-info btn-raised debug" id="sendTextToBluetoothButton">Senden über Bluetooth</button>
 	</div>
 	<div class="row">
 		<div class="col-md-4"></div>
 		<div class="col-md-4 text-center">
-			<button class="btn btn-raised btn-warning" id="showPositionButton">Position in Koordinaten anzeigen</button>
-			<button class="btn btn-raised btn-warning" id="usePositionAsStartButton">Position als als Adresse anzeigen</button>
-			<form>
-				<label class="inputLabel">Ziel</label>
-				<input type="text" class="form-control placeInput" id="endInput"> </div>
-		<button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
-		</form>
+			<button class="btn btn-raised btn-warning debug" id="showPositionButton">Position in Koordinaten anzeigen</button>
+			<button class="btn btn-raised btn-warning debug" id="usePositionAsStartButton">Position als als Adresse anzeigen</button>
+			<br>
+			<br>
+			<h2>Ziel:</h2>
+			<input type="text" class="form-control placeInput" id="endInput">
+			<br>
+			<button type="button" class="btn btn-primary btn-outline" id="calculateRouteButton">Route Berechnen</button>
+		</div>
 	</div>
 	</div>
 	<div id="map"></div> &nbsp;
-	<div id="infoBox"></div>
-	<form action="javascript:setConstants()">
-		<label>Maximale Trigger Zeit in Millisekunden</label>
-		<input type="number" id="maxTriggerInput">
-		<label>Trigger Faktor (je größer desto längere trigger zeiten)</label>
-		<input type="number" id="triggerFactorInput">
-		<label>Kleinster Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="minRangeInput">
-		<label>Größter Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="maxRangeInput">
-		<label>Faktor für den Radius, in dem ein Ort akzeptiert wird</label>
-		<input type="number" id="factorRangeInput">
-		<label>Entfernung, bis ein Abkommen von der Strecke erkannt wird (in Metern)</label>
-		<input type="number" id="wrongWayRange">
-		<button onclick="setConstants()">Speichern</button>
-	</form>
+	<div class="row"><div id="infoBox" class="debug col-md-8 col-md-offset-2"></div></div>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>

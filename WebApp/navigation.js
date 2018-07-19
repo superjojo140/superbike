@@ -45,6 +45,7 @@ function setConstants() {
 	$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
 	$("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
 	$("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
+	console.log("Constants set"); 
 }
 /***
  *      _____  _     _                          _____      _            _       _   _             

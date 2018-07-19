@@ -19,6 +19,7 @@ var directionsDisplay;
 var stepDisplay;
 var map;
 var currentPositionMarker;
+var DEBUG_MODE = true;
 /***
  *      ______               _     ____  _           _ _             
  *     |  ____|             | |   |  _ \(_)         | (_)            
@@ -29,27 +30,31 @@ var currentPositionMarker;
  *                                                              __/ |
  *                                                             |___/ 
  */
-$("#sendTextToBluetoothButton").click(sendToBluetooth);
-$("#connectButton").click(connectToBluetoothDevice);
-$("#showPositionButton").click(function () {
-	getLocation(alertPosition)
-});
-$("#usePositionAsStartButton").click(function () {
-	getLocation(showCurrentAdress)
-});
-$("#calculateRouteButton").click(function () {
-	getLocation(calculateAndDisplayRoute)
-});
-/***
- *       _____                   _        __  __                 
- *      / ____|                 | |      |  \/  |                
- *     | |  __  ___   ___   __ _| | ___  | \  / | __ _ _ __  ___ 
- *     | | |_ |/ _ \ / _ \ / _` | |/ _ \ | |\/| |/ _` | '_ \/ __|
- *     | |__| | (_) | (_) | (_| | |  __/ | |  | | (_| | |_) \__ \
- *      \_____|\___/ \___/ \__, |_|\___| |_|  |_|\__,_| .__/|___/
- *                          __/ |                     | |        
- *                         |___/                      |_|        
- */
+$("document").ready(function () {
+		$("#sendTextToBluetoothButton").click(sendToBluetooth);
+		$("#connectButton").click(connectToBluetoothDevice);
+		$("#showPositionButton").click(function () {
+			getLocation(alertPosition)
+		});
+		$("#usePositionAsStartButton").click(function () {
+			getLocation(showCurrentAdress)
+		});
+		$("#calculateRouteButton").click(function () {
+			getLocation(calculateAndDisplayRoute)
+		});
+		$("#saveNaviSettingsButton").click(setConstants);
+		$("#toggleDebugModeButton").click(toggleDebugMode);
+	})
+	/***
+	 *       _____                   _        __  __                 
+	 *      / ____|                 | |      |  \/  |                
+	 *     | |  __  ___   ___   __ _| | ___  | \  / | __ _ _ __  ___ 
+	 *     | | |_ |/ _ \ / _ \ / _` | |/ _ \ | |\/| |/ _` | '_ \/ __|
+	 *     | |__| | (_) | (_) | (_| | |  __/ | |  | | (_| | |_) \__ \
+	 *      \_____|\___/ \___/ \__, |_|\___| |_|  |_|\__,_| .__/|___/
+	 *                          __/ |                     | |        
+	 *                         |___/                      |_|        
+	 */
 function initMap() {
 	markerArray = [];
 	// Instantiate a directions service.
@@ -208,17 +213,34 @@ function printDirectionsResult(dr) {
  */
 function writeRouteValuesToScreen(values) {
 	//TODO implement
-	console.log(values);
-	var box = $("#infoBox");
-	box.html("");
-	box.append("<table class='table table-striped'>");
-	box.append("<tr><td>Speed</td><td>" + Math.round(values.speed * 3.6) + " km/h</td></tr>");
-	box.append("<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>");
-	box.append("<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>");
-	box.append("<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>");
-	box.append("<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex].maneuver + "</td></tr>");
-	box.append("<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime / 1000) + " s</td></tr>");
-	box.append("</table>");
+	if (DEBUG_MODE) {
+		console.log(values);
+		var box = $("#infoBox");
+		
+		var message = "<table class='table table-striped'>";
+		message += "<tr><td>Speed</td><td>" + Math.round(values.speed * 3.6) + " km/h</td></tr>";
+		message += "<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>";
+		message += "<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>";
+		message += "<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>";
+		message += "<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex].maneuver + "</td></tr>";
+		message += "<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime / 1000) + " s</td></tr>";
+		message += "</table>";
+		box.html(message);
+	}
+}
+
+function toggleDebugMode() {
+	DEBUG_MODE = !DEBUG_MODE;
+	if (DEBUG_MODE) {
+		$(".debug").fadeIn();
+		$("#toggleDebugModeButton").removeClass("btn-outline");
+		$("#toggleDebugModeButton").addClass("btn-raised");
+	}
+	else {
+		$(".debug").fadeOut();
+		$("#toggleDebugModeButton").removeClass("btn-raised");
+		$("#toggleDebugModeButton").addClass("btn-outline");
+	}
 }
 /*
 
