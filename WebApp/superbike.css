@@ -1,4 +1,3 @@
-
 /***
  *       _____                   _        __  __                 
  *      / ____|                 | |      |  \/  |                
@@ -11,58 +10,56 @@
  */
 
 #map {
-  max-width: 90%;
-    height: 500px;
-    margin-left: 5%;
+	max-width: 90%;
+	height: 500px;
+	margin-left: 5%;
 }
 
 
 /* Optional: Makes the sample page fill the window. */
 
-
 #floating-panel {
-  position: absolute;
-  top: 10px;
-  left: 25%;
-  z-index: 5;
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  text-align: center;
-  font-family: 'Roboto', 'sans-serif';
-  line-height: 30px;
-  padding-left: 10px;
+	position: absolute;
+	top: 10px;
+	left: 25%;
+	z-index: 5;
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #999;
+	text-align: center;
+	font-family: 'Roboto', 'sans-serif';
+	line-height: 30px;
+	padding-left: 10px;
 }
 
 #warnings-panel {
-  width: 100%;
-  height: 10%;
-  text-align: center;
+	width: 100%;
+	height: 10%;
+	text-align: center;
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	/* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+	vertical-align: middle !important;
 }
 
 
@@ -78,17 +75,20 @@
  */
 
 .logo {
-    max-width: 50%;
-   max-height: 150px;
+	max-width: 50%;
+	max-height: 150px;
 }
 
 .placeInput {
-   margin-left:10%;
-    max-width: 81%;
+	margin-left: 10%;
+	max-width: 81%;
 	text-align: center;
 }
 
 .inputLabel {
-    margin-left: 10%;
+	margin-left: 10%;
+}
+.btn-full-size {
+	width: 100%;
 }
 

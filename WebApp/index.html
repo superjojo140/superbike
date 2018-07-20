@@ -56,11 +56,13 @@
 						<div class="inputGroup">
 							<label>Entfernung, bis ein Abkommen von der Strecke erkannt wird:</label>
 							<input type="number" id="wrongWayRange" class="form-control"><small class="form-text text-muted">In Metern</small> </div>
+						<br><br>
+						<button type="button" title="Debug Modus" class="btn btn-warning btn-raised btn-full-size" id="toggleDebugModeButton"><i class="material-icons">bug_report</i>  Debug Mode</button>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-					<button type="button" class="btn btn-success btn-raised" id="saveNaviSettingsButton" data-dismiss="modal">Speichern</button>
+					<button type="button" class="btn btn-secondary btn-full-size" data-dismiss="modal">Abbrechen</button><br>
+					<button type="button" class="btn btn-success btn-raised btn-full-size" id="saveNaviSettingsButton" data-dismiss="modal">Speichern</button>
 				</div>
 			</div>
 		</div>
@@ -68,8 +70,8 @@
 	<!-- Main Page -->
 	<nav class="navbar navbar-light bg-light">
 		<img src="assets/logo.png" width="200px" class="logo">
-		<button type="button" title="Debug Modus" class="btn btn-warning btn-raised" id="toggleDebugModeButton"><i class="material-icons">bug_report</i> </button>
-		<button type="button" title="Einstellungen" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#naviSettingsModal"><i class="material-icons">settings</i> </button>
+		
+		<button type="button" title="Einstellungen" class="btn btn-primary btn-outline" data-toggle="modal" data-target="#naviSettingsModal"><i class="material-icons">settings</i></button>
 	</nav>
 	<br>
 	<div style="text-align: center;">
