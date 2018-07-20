@@ -216,13 +216,19 @@ function writeRouteValuesToScreen(values) {
 	if (DEBUG_MODE) {
 		console.log(values);
 		var box = $("#infoBox");
-		
 		var message = "<table class='table table-striped'>";
 		message += "<tr><td>Speed</td><td>" + Math.round(values.speed * 3.6) + " km/h</td></tr>";
 		message += "<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>";
 		message += "<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>";
-		message += "<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>";
-		message += "<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex].maneuver + "</td></tr>";
+		if (myRoute.steps[values.currentStepIndex + 1] >= myRoute.steps.length) {
+			message += "<tr><td>Text</td><td>Und dann bist du da!</td></tr>";
+			message += "<tr><td>Maneuver</td><td>destination</td></tr>";
+		}
+		else {
+			message += "<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>";
+			message += "<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex + 1].maneuver + "</td></tr>";
+		}
+		
 		message += "<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime / 1000) + " s</td></tr>";
 		message += "</table>";
 		box.html(message);
