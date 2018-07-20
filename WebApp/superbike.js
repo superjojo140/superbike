@@ -20,6 +20,8 @@ var stepDisplay;
 var map;
 var currentPositionMarker;
 var DEBUG_MODE = true;
+const START_CHARACTER = String.fromCharCode(2);
+const END_CHARACTER = String.fromCharCode(3);
 /***
  *      ______               _     ____  _           _ _             
  *     |  ____|             | |   |  _ \(_)         | (_)            
@@ -31,7 +33,10 @@ var DEBUG_MODE = true;
  *                                                             |___/ 
  */
 $("document").ready(function () {
-		$("#sendTextToBluetoothButton").click(sendToBluetooth);
+		$("#sendTextToBluetoothButton").click(function () {
+			var tempMsg = $("#inputBT").val();
+			sendToBluetooth(tempMsg);
+		});
 		$("#connectButton").click(connectToBluetoothDevice);
 		$("#showPositionButton").click(function () {
 			getLocation(alertPosition)
@@ -167,28 +172,51 @@ function connectToBluetoothDevice() {
 		}).then(function (characteristic) {
 			bluetoothConnection = characteristic;
 			// Step 5: Write to the characteristic			
-			var data = enc.encode("Hallo");
-			return characteristic.writeValue(data);
 		}).catch(function (error) {
 			// And of course: error handling!
-			console.error('Connection failed!', error);
+			console.error('Connection to Bluetooth Bike Computer failed!', error);
 		});
 	}
 }
+//Returns an array of chunks with specified length
+function splitString(str, length) {
+	return str.match(new RegExp('.{1,' + length + '}', 'g'));
+}
 
-function sendToBluetooth() {
+function sendToBluetooth(message) {
 	if (!bluetoothConnection) {
 		swal("Nicht verbunden", "Bitte verbinde dich zuerst mit deinem Bike Computer", "error");
 	}
 	else {
-		var arrayBuff = document.getElementById("inputBT").value;
-		arrayBuff = enc.encode(arrayBuff);
-		bluetoothConnection.writeValue(arrayBuff).catch(function (error) {
-			// And of course: error handling!
-			console.error('Connection failed!', error);
+		//Add start and end character to message
+		message = START_CHARACTER + message + END_CHARACTER;
+		//Split message in chunks of 20 characters. The AT-09 Bluetooth Modul can only receive 20 caracters at once
+		var messageArray = splitString(message, 20);
+		sendProcessedMessageToBluetoooth(messageArray);
+	}
+}
+//
+function sendProcessedMessageToBluetoooth(messageArray) {
+	if (!bluetoothConnection) {
+		throw "Keine Bluetooth Verbindung. Bitte verbinde dich zuerst mit deinem Bike Computer";
+	}
+	//check wether there is content in the messageArray
+	if (messageArray.length > 0) {
+		var arrayBuff = enc.encode(messageArray[0]);
+		var writeToBluetoothPromise = bluetoothConnection.writeValue(arrayBuff);
+		writeToBluetoothPromise.catch(function (error) {
+			console.error('Error sending message to bluetooth device: ' + message, error);
+		});
+		writeToBluetoothPromise.then(function () {
+			//Remove messageArray's first Element
+			messageArray.shift();
+			//Call sendProcessedMessageToBluetoooth function again
+			sendProcessedMessageToBluetoooth(messageArray);
 		});
 	}
 }
+//
+
 
 function printDirectionsResult(dr) {
 	var ar = dr.routes[0].legs[0].steps;
@@ -228,7 +256,6 @@ function writeRouteValuesToScreen(values) {
 			message += "<tr><td>Text</td><td>" + myRoute.steps[values.currentStepIndex + 1].instructions + "</td></tr>";
 			message += "<tr><td>Maneuver</td><td>" + myRoute.steps[values.currentStepIndex + 1].maneuver + "</td></tr>";
 		}
-		
 		message += "<tr><td>Next trigger in   </td><td>" + Math.round(values.nextTriggerTime / 1000) + " s</td></tr>";
 		message += "</table>";
 		box.html(message);

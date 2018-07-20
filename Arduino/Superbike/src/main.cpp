@@ -1,4 +1,9 @@
 #include <arduino.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial BTSerial(2, 3); // RX | TX
+
+
 #include <superbike-gui.h>
 
 #define COLORED     0
@@ -73,8 +78,21 @@ void setup() {
       return;
   }*/
 
+  //Bluetooth setup
+
+  Serial.begin(9600);
+  Serial.println("Ready");
+  BTSerial.begin(9600);
+
 
 }
 
 void loop() {
+  // Keep reading from HC-05 and send to Arduino Serial Monitor
+  if (BTSerial.available())
+    Serial.write(BTSerial.read());
+
+  // Keep reading from Arduino Serial Monitor and send to HC-05
+  if (Serial.available())
+    BTSerial.write(Serial.read());
 }
