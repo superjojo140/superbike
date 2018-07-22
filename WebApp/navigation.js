@@ -8,7 +8,8 @@
  *                                                                                
  *                                                                                
  */
-var myRoute;
+var myRoute = {};
+var stepByStepTimeout;
 /***
  *       _____                _              _       
  *      / ____|              | |            | |      
@@ -227,7 +228,7 @@ function handleNewPosition(newPosition) {
 		writeRouteValuesToScreen(newValues);
 		//
 		//trigger next iteration
-		setTimeout(function () {
+		stepByStepTimeout = setTimeout(function () {
 			getLocation(handleNewPosition)
 		}, nextTriggerTime);
 	}
@@ -279,4 +280,8 @@ function stillOnTheRightWay() {
 	else {
 		return false;
 	}
+}
+
+function stopNavigation(){
+  clearTimeout(stepByStepTimeout);
 }

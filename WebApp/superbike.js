@@ -23,25 +23,27 @@ var DEBUG_MODE = true;
 const START_CHARACTER = String.fromCharCode(2);
 const END_CHARACTER = String.fromCharCode(3);
 const MANEUVER_IDS = {
-    "turn-left": 0
-    , "turn-sharp-left": 1
-    , "turn-slight-left": 2
-    , "turn-right": 3
-    , "turn-sharp-right": 4
-    , "turn-slight-right": 5
-    , "straight": 6
-    , "uturn": 7
-  }
-  /***
-   *      ______               _     ____  _           _ _             
-   *     |  ____|             | |   |  _ \(_)         | (_)            
-   *     | |____   _____ _ __ | |_  | |_) |_ _ __   __| |_ _ __   __ _ 
-   *     |  __\ \ / / _ | '_ \| __| |  _ <| | '_ \ / _` | | '_ \ / _` |
-   *     | |___\ V |  __| | | | |_  | |_) | | | | | (_| | | | | | (_| |
-   *     |______\_/ \___|_| |_|\__| |____/|_|_| |_|\__,_|_|_| |_|\__, |
-   *                                                              __/ |
-   *                                                             |___/ 
-   */
+  "turn-left": 0
+  , "turn-sharp-left": 1
+  , "turn-slight-left": 2
+  , "turn-right": 3
+  , "turn-sharp-right": 4
+  , "turn-slight-right": 5
+  , "straight": 6
+  , "uturn": 7
+}
+var bluetoothQueue = [];
+var bluetoothQueueBusy = false;
+/***
+ *      ______               _     ____  _           _ _             
+ *     |  ____|             | |   |  _ \(_)         | (_)            
+ *     | |____   _____ _ __ | |_  | |_) |_ _ __   __| |_ _ __   __ _ 
+ *     |  __\ \ / / _ | '_ \| __| |  _ <| | '_ \ / _` | | '_ \ / _` |
+ *     | |___\ V |  __| | | | |_  | |_) | | | | | (_| | | | | | (_| |
+ *     |______\_/ \___|_| |_|\__| |____/|_|_| |_|\__,_|_|_| |_|\__, |
+ *                                                              __/ |
+ *                                                             |___/ 
+ */
 $("document").ready(function () {
     $("#sendTextToBluetoothButton").click(function () {
       var tempMsg = $("#inputBT").val();
@@ -59,6 +61,8 @@ $("document").ready(function () {
     });
     $("#saveNaviSettingsButton").click(setConstants);
     $("#toggleDebugModeButton").click(toggleDebugMode);
+    $("#stopNavigationButton").click(stopNavigation);
+    $("#sendExampleMessageButton").click(sendExampleMessage);
   })
   /***
    *       _____                   _        __  __                 
@@ -202,30 +206,84 @@ function sendToBluetooth(message) {
     message = START_CHARACTER + message + END_CHARACTER;
     //Split message in chunks of 20 characters. The AT-09 Bluetooth Modul can only receive 20 caracters at once
     var messageArray = splitString(message, 20);
-    sendProcessedMessageToBluetoooth(messageArray);
+    //Append the messageChunks to bluetoothQueue
+    bluetoothQueue = bluetoothQueue.concat(messageArray);
+    if (!bluetoothQueueBusy) {
+      triggerBluetoothQueue();
+    }
   }
 }
 //
-function sendProcessedMessageToBluetoooth(messageArray) {
+//Start sending next chunk of bluetoothQueue
+//WARNING: Call this function only if bluetoothQueueBusy == false !!!
+function triggerBluetoothQueue() {
   if (!bluetoothConnection) {
     throw "Keine Bluetooth Verbindung. Bitte verbinde dich zuerst mit deinem Bike Computer";
   }
-  //check wether there is content in the messageArray
-  if (messageArray.length > 0) {
-    var arrayBuff = enc.encode(messageArray[0]);
+  //check wether there is content in the bluetoothQueue
+  if (bluetoothQueue.length > 0) {
+    //block bluetooth queue
+    bluetoothQueueBusy = true;
+    if (DEBUG_MODE) {
+      console.log("sending: " + bluetoothQueue[0]);
+      console.log(bluetoothQueue.toString());
+    }
+    var arrayBuff = enc.encode(bluetoothQueue[0]);
+    //Remove bluetoothQueue's first Element
+    bluetoothQueue.shift();
+    if (DEBUG_MODE) {
+      console.log("Shifting...");
+      console.log(bluetoothQueue.toString());
+    }
     var writeToBluetoothPromise = bluetoothConnection.writeValue(arrayBuff);
     writeToBluetoothPromise.catch(function (error) {
       console.error('Error sending message to bluetooth device: ' + message, error);
     });
     writeToBluetoothPromise.then(function () {
-      //Remove messageArray's first Element
-      messageArray.shift();
-      //Call sendProcessedMessageToBluetoooth function again
-      sendProcessedMessageToBluetoooth(messageArray);
+      //Call triggerBluetoothQueue function again
+      triggerBluetoothQueue();
     });
+  }
+  else {
+    //free bluetoothQueue
+    bluetoothQueueBusy = false;
   }
 }
 //
+//
+/***
+ *      _____                                _____                            _____        __      
+ *     |  __ \                              / ____|                          |_   _|      / _|     
+ *     | |__) | __ ___   ___ ___  ___ ___  | (___   ___ _ __ ___  ___ _ __     | |  _ __ | |_ ___  
+ *     |  ___/ '__/ _ \ / __/ _ \/ __/ __|  \___ \ / __| '__/ _ \/ _ \ '_ \    | | | '_ \|  _/ _ \ 
+ *     | |   | | | (_) | (_|  __/\__ \__ \  ____) | (__| | |  __/  __/ | | |  _| |_| | | | || (_) |
+ *     |_|   |_|  \___/ \___\___||___/___/ |_____/ \___|_|  \___|\___|_| |_| |_____|_| |_|_| \___/ 
+ *                                                                                                 
+ *                                                                                                 
+ */
+function sendExampleMessage() {
+  myRoute.steps = [{
+    maneuver: "straight"
+    , instructions: "Jetzt geht die Reise erst los"
+  }, {
+    maneuver: "turn-right"
+    , instructions: "Links abbiegen auf die Straße mit dem ganz ganz langen Namen"
+  }];
+  writeRouteValuesToScreen({
+    currentRange: 15
+    , currentStepIndex: 0
+    , distanceToDestination: 40.54534142170716
+    , nextTriggerTime: 2000
+    , position: {
+      lat: 51.4918116
+      , lng: 9.0743193
+    }
+    , speed: 15
+    , stepReached: false
+    , timestamp: 1532254016336
+  })
+}
+
 function printDirectionsResult(dr) {
   var ar = dr.routes[0].legs[0].steps;
   for (var i in ar) {
@@ -237,16 +295,7 @@ function printDirectionsResult(dr) {
     console.log("Lng: " + ar[i].start_point.lng());
   }
 }
-/***
- *      _____                                _____                            _____        __      
- *     |  __ \                              / ____|                          |_   _|      / _|     
- *     | |__) | __ ___   ___ ___  ___ ___  | (___   ___ _ __ ___  ___ _ __     | |  _ __ | |_ ___  
- *     |  ___/ '__/ _ \ / __/ _ \/ __/ __|  \___ \ / __| '__/ _ \/ _ \ '_ \    | | | '_ \|  _/ _ \ 
- *     | |   | | | (_) | (_|  __/\__ \__ \  ____) | (__| | |  __/  __/ | | |  _| |_| | | | || (_) |
- *     |_|   |_|  \___/ \___\___||___/___/ |_____/ \___|_|  \___|\___|_| |_| |_____|_| |_|_| \___/ 
- *                                                                                                 
- *                                                                                                 
- */
+
 function getManeuverIdByName(name) {
   return MANEUVER_IDS[name];
 }
