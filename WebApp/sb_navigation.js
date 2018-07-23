@@ -47,7 +47,9 @@ function setConstants() {
 	$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
 	$("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
 	$("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
-	console.log("Constants set");
+	if (DEBUG_MODE) {
+		console.log("Constants set");
+	}
 }
 /***
  *      _____  _     _                          _____      _            _       _   _             
@@ -152,7 +154,7 @@ function handleNewPosition(newPosition) {
 	//Calculate new speed
 	var newSpeed;
 	if (oldValues.position) { //Check wether an old position is set
-		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000)*3.6; // /1000 to get speed in m/s instead of m/ms | *3.6 to get speed in km/h
+		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000) * 3.6; // /1000 to get speed in m/s instead of m/ms | *3.6 to get speed in km/h
 	} else {
 		//If there is no old position (for example at the first iteration)
 		newSpeed = 0;
