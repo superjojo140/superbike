@@ -111,14 +111,14 @@ function writeRouteValuesToScreen(values) {
 		showValuesForDebug(values);
 	}
 	//Send data via Bluetooth
-	var stepInstructions = myRoute.steps[values.currentStepIndex + 1].instructions;
-	//Strip html tags
-	stepInstructions = stepInstructions.replace(/<\/?[^>]+(>|$)/g, "");
+	if (values.stepUpdated) {
+		var stepInstructions = myRoute.steps[values.currentStepIndex + 1].instructions;
+		//Strip html tags
+		stepInstructions = stepInstructions.replace(/<\/?[^>]+(>|$)/g, "");
+		//Send Step Description
+		sendStepDescription(myRoute.steps[values.currentStepIndex + 1].maneuver, stepInstructions);
+	}
 
-	//generate Message for transmission
-
-	sendStepDescription(myRoute.steps[values.currentStepIndex + 1].maneuver, stepInstructions);
-	//
 	//Distance to next step
 	sendDistanceToNextStep(values.distanceToDestination);
 }

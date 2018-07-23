@@ -175,19 +175,23 @@ function handleNewPosition(newPosition) {
 	//Calculate new step index
 	var newStepIndex;
 	var newStepReached;
+	var isStepUpdated;
 	if (newDistanceToDestination < currentRange) {
 		//reached step's end_location
 		newStepReached = true;
 		newStepIndex = oldValues.currentStepIndex;
+		isStepUpdated = false;
 	}
 	else {
 		if (oldValues.stepReached) {
 			//Range of the step's end point leaved -> next step is diplayed'
 			newStepReached = false;
 			newStepIndex = oldValues.currentStepIndex + 1;
+			isStepUpdated = true;
 		}
 		else {
 			newStepIndex = oldValues.currentStepIndex;
+			isStepUpdated = false;
 		}
 	}
 	//
@@ -205,6 +209,7 @@ function handleNewPosition(newPosition) {
 		, nextTriggerTime: nextTriggerTime
 		, currentRange: currentRange
 		, stepReached: newStepReached
+		, stepUpdated: isStepUpdated
 	}
 	myRoute.currentValues = newValues;
 	//
