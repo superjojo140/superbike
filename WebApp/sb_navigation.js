@@ -10,6 +10,7 @@
  */
 var myRoute = {};
 var stepByStepTimeout;
+var firstIteration = true;
 /***
  *       _____                _              _       
  *      / ____|              | |            | |      
@@ -46,7 +47,7 @@ function setConstants() {
 	$("#maxRangeInput").val(MAX_RANGE_TO_ACCEPT_POSITION);
 	$("#minRangeInput").val(MIN_RANGE_TO_ACCEPT_POSITION);
 	$("#factorRangeInput").val(RANGE_TO_ACCEPT_FACTOR);
-	console.log("Constants set"); 
+	console.log("Constants set");
 }
 /***
  *      _____  _     _                          _____      _            _       _   _             
@@ -105,13 +106,17 @@ function initRoute(requestObject) {
 	//
 	//Set first step as startpoint
 	myRoute.currentValues = {
-		currentStepIndex: 0
-		, stepReached: false
+		currentStepIndex: 0,
+		stepReached: false
 	};
-	//
+	//Set first Iteration to true
+	firstIteration = true;
 	//Route is now initialised
 	myRoute.inititalised = true;
-	console.log(myRoute);
+	if (DEBUG_MODE) {
+		console.log("%c Start Navigation", "background-color: #2d6908; color:white");
+		console.log(myRoute);
+	}
 	//Start Step by step algorithm
 	getLocation(handleNewPosition);
 }
@@ -124,8 +129,8 @@ function handleNewPosition(newPosition) {
 	//convert new Position to {lat:lat,lng:lng} format
 	//
 	newPosition = {
-		lat: newPosition.coords.latitude
-		, lng: newPosition.coords.longitude
+		lat: newPosition.coords.latitude,
+		lng: newPosition.coords.longitude
 	};
 	//
 	//showCurrentPositionMarker
@@ -133,9 +138,9 @@ function handleNewPosition(newPosition) {
 		currentPositionMarker.setMap(null);
 	}
 	currentPositionMarker = new google.maps.Marker({
-		position: newPosition
-		, map: map
-		, title: 'Deine Position'
+		position: newPosition,
+		map: map,
+		title: 'Deine Position'
 	});
 	//
 	//save values from last iteration
@@ -148,8 +153,7 @@ function handleNewPosition(newPosition) {
 	var newSpeed;
 	if (oldValues.position) { //Check wether an old position is set
 		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000); // /1000 to get speed in m/s instead of m/ms
-	}
-	else {
+	} else {
 		//If there is no old position (for example at the first iteration)
 		newSpeed = 0;
 	}
@@ -157,8 +161,8 @@ function handleNewPosition(newPosition) {
 	//current step's position
 	var currentStep = myRoute.steps[oldValues.currentStepIndex];
 	var currentStepPosition = {
-		lat: currentStep.end_location.lat()
-		, lng: currentStep.end_location.lng()
+		lat: currentStep.end_location.lat(),
+		lng: currentStep.end_location.lng()
 	};
 	//
 	//Current Range
@@ -181,18 +185,20 @@ function handleNewPosition(newPosition) {
 		newStepReached = true;
 		newStepIndex = oldValues.currentStepIndex;
 		isStepUpdated = false;
-	}
-	else {
+	} else {
 		if (oldValues.stepReached) {
 			//Range of the step's end point leaved -> next step is diplayed'
 			newStepReached = false;
 			newStepIndex = oldValues.currentStepIndex + 1;
 			isStepUpdated = true;
-		}
-		else {
+		} else {
 			newStepIndex = oldValues.currentStepIndex;
 			isStepUpdated = false;
 		}
+	}
+	//If this is the first iteration of the algortihm, the stepUpdated Property shpuld be set to true
+	if (firstIteration) {
+		isStepUpdated = true;
 	}
 	//
 	//Calculate time (in milliseconds) till next handleNewPosition iteration
@@ -201,15 +207,15 @@ function handleNewPosition(newPosition) {
 	//
 	//Set new Values
 	var newValues = {
-		timestamp: newTimestamp
-		, speed: newSpeed
-		, position: newPosition
-		, currentStepIndex: newStepIndex
-		, distanceToDestination: newDistanceToDestination
-		, nextTriggerTime: nextTriggerTime
-		, currentRange: currentRange
-		, stepReached: newStepReached
-		, stepUpdated: isStepUpdated
+		timestamp: newTimestamp,
+		speed: newSpeed,
+		position: newPosition,
+		currentStepIndex: newStepIndex,
+		distanceToDestination: newDistanceToDestination,
+		nextTriggerTime: nextTriggerTime,
+		currentRange: currentRange,
+		stepReached: newStepReached,
+		stepUpdated: isStepUpdated
 	}
 	myRoute.currentValues = newValues;
 	//
@@ -218,8 +224,7 @@ function handleNewPosition(newPosition) {
 	if (newStepIndex >= myRoute.steps.length) {
 		//Reached the final destination
 		finalDestinationReached();
-	}
-	else {
+	} else {
 		//Check wether we are still on the right way
 		if (stillOnTheRightWay() == false) {
 			swal("Ooooops", "You're on the wrong way", "error");
@@ -254,8 +259,7 @@ function distanceToPosition(currentPosition, destinationPosition, range) {
 	if (currentPosition.lng < destinationPosition.lng + rangeLng && currentPosition.lng > destinationPosition.lng - rangeLng && currentPosition.lat < destinationPosition.lat + rangeLat && currentPosition.lat > destinationPosition.lat - rangeLat) {
 		//Current Position is withun range of destination Position
 		return 0;
-	}
-	else return distanceBetweenCoordinates(currentPosition.lat, currentPosition.lng, destinationPosition.lat, destinationPosition.lng);
+	} else return distanceBetweenCoordinates(currentPosition.lat, currentPosition.lng, destinationPosition.lat, destinationPosition.lng);
 }
 
 function finalDestinationReached() {
@@ -281,12 +285,14 @@ function stillOnTheRightWay() {
 	if (currentPosition.lng < mostRightLng + rangeLng && currentPosition.lng > mostLeftLng - rangeLng && currentPosition.lat < mostUpLat + rangeLat && currentPosition.lat > mostDownLat - rangeLat) {
 		//Current Position is within range of the steps line
 		return true;
-	}
-	else {
+	} else {
 		return false;
 	}
 }
 
-function stopNavigation(){
-  clearTimeout(stepByStepTimeout);
+function stopNavigation() {
+	clearTimeout(stepByStepTimeout);
+	if (DEBUG_MODE) {
+		console.log("%c Stop Navigation", "background-color: #bc051a; color:white");
+	}
 }

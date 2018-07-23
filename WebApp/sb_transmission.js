@@ -18,6 +18,7 @@ const MANEUVER_IDS = {
 	"straight": 6,
 	"uturn": 7
 }
+var SHOW_BITSHIFTING_LOG = false;
 /***
  *      _____                                _____                            _____        __      
  *     |  __ \                              / ____|                          |_   _|      / _|     
@@ -34,7 +35,7 @@ function sendExampleMessage() {
 		instructions: "Jetzt geht die Reise erst los"
   }, {
 		maneuver: "turn-right",
-		instructions: "Links abbiegen auf die Straße mit dem ganz ganz langen Namen"
+		instructions: "Links abbiegen auf die Straße mit dem ganz ganz langen Namen und den Ümläöüten"
   }];
 	writeRouteValuesToScreen({
 		currentRange: 15,
@@ -47,7 +48,8 @@ function sendExampleMessage() {
 		},
 		speed: 15,
 		stepReached: false,
-		timestamp: 1532254016336
+		timestamp: 1532254016336,
+		stepUpdated: true
 	})
 }
 
@@ -99,7 +101,7 @@ function sendDistanceToNextStep(distance) {
 	//Distance has to be splittet in two 8Bit Chars now
 	var lastEightBits = distance & 255; //Bitwise and
 	var secondEightBits = (distance >>> 8) & 255; //Shift bit 15 - 8 to bit 7 -0
-	if (DEBUG_MODE) {
+	if (DEBUG_MODE && SHOW_BITSHIFTING_LOG) {
 		console.log("Bitshifting!!! - Original number: " + distance + " in binary: " + distance.toString(2) + "  Converted to 16Bit: " + secondEightBits.toString(2) + " - " + lastEightBits.toString(2));
 	}
 	msgToSend = "N" + String.fromCharCode(secondEightBits) + String.fromCharCode(lastEightBits);
