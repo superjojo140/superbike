@@ -152,7 +152,7 @@ function handleNewPosition(newPosition) {
 	//Calculate new speed
 	var newSpeed;
 	if (oldValues.position) { //Check wether an old position is set
-		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000); // /1000 to get speed in m/s instead of m/ms
+		newSpeed = distanceBetweenCoordinates(newPosition.lat, newPosition.lng, oldValues.position.lat, oldValues.position.lng) / ((newTimestamp - oldValues.timestamp) / 1000)*3.6; // /1000 to get speed in m/s instead of m/ms | *3.6 to get speed in km/h
 	} else {
 		//If there is no old position (for example at the first iteration)
 		newSpeed = 0;

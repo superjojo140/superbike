@@ -73,7 +73,7 @@ function showValuesForDebug(values) {
 	console.log(values);
 	var box = $("#infoBox");
 	var message = "<table class='table table-striped'>";
-	message += "<tr><td>Speed</td><td>" + Math.round(values.speed * 3.6) + " km/h</td></tr>";
+	message += "<tr><td>Speed</td><td>" + Math.round(values.speed) + " km/h</td></tr>";
 	message += "<tr><td>Distance</td><td>" + Math.round(values.distanceToDestination) + " m</td></tr>";
 	message += "<tr><td>Range</td><td>" + Math.round(values.currentRange) + "  m</td></tr>";
 	if (myRoute.steps[values.currentStepIndex + 1] >= myRoute.steps.length) {
@@ -108,6 +108,12 @@ function sendDistanceToNextStep(distance) {
 	sendToBluetooth(msgToSend);
 }
 
+function sendSpeed(speed){
+	speed = Math.round(speed);
+	msgToSend = "S" + String.fromCharCode(speed);
+	sendToBluetooth(msgToSend);
+}
+
 function writeRouteValuesToScreen(values) {
 	if (DEBUG_MODE) {
 		showValuesForDebug(values);
@@ -123,4 +129,6 @@ function writeRouteValuesToScreen(values) {
 
 	//Distance to next step
 	sendDistanceToNextStep(values.distanceToDestination);
+	//Speed
+	sendSpeed(values.speed);
 }
