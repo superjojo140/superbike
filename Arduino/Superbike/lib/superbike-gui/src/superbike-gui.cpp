@@ -7,9 +7,9 @@ SuperbikeGui::SuperbikeGui(Paint *paint, Epd *epd){
 
 
 void SuperbikeGui::paintStatusBar(char *textLeft , char *textMiddle, char *textRight){
-  this->paint->Clear(COLORED);
   this->paint->SetWidth(200);
   this->paint->SetHeight(20);
+  this->paint->Clear(COLORED);
   this->paint->DrawStringAt(2, 3, textLeft, &Font16, UNCOLORED);
   this->paint->DrawStringAt(7*11, 3, textMiddle, &Font16, UNCOLORED);
   this->paint->DrawStringAt(13*11, 3, textRight, &Font16, UNCOLORED);
@@ -46,14 +46,26 @@ void SuperbikeGui::paintNavigationStep(char *textTop, char *textBottom, unsigned
 
 
 void SuperbikeGui::paintSpeed(char speed){
+  const unsigned char myColor = COLORED;
+  const unsigned char myZoom = 30;
   if(speed > 9){
-    sjDrawNumber(80, 40, speed / 10, COLORED, 5, 30, this->paint, this->epd); //Draw tens
-  }
+  sjDrawNumber(80, 40, speed / 10, myColor, 5, myZoom, this->paint, this->epd); //Draw tens
+}
+else{
+  //Clear the area of the tens
+  this->paint->SetWidth(1 * myZoom + 4);
+  this->paint->SetHeight(2 * myZoom + 4);
+  this->paint->Clear(!myColor);
+    this->epd->SetFrameMemory(this->paint->GetImage(), 80, 40, this->paint->GetWidth(), this->paint->GetHeight());
+}
+
   sjDrawNumber(120, 40, speed % 10, COLORED, 5, 30, this->paint, this->epd); //Draw ones
+  //kmh Print
   this->paint->SetWidth(30);
   this->paint->SetHeight(20);
   this->paint->Clear(UNCOLORED);
   const char kmh[]= "kmh";
   this->paint->DrawStringAt(0,0, kmh, &Font16, COLORED);
+  //SetFrameMemory twice
   this->epd->SetFrameMemory(this->paint->GetImage(), 160, 90, this->paint->GetWidth(), this->paint->GetHeight());
 }
