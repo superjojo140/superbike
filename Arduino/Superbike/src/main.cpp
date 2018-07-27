@@ -12,6 +12,17 @@ SoftwareSerial BTSerial(2, 3); // RX | TX
 #define ZOOM_FACTOR 5
 #define THICKNESS 2
 
+#define START_CHARACTER 2
+#define END_CHARACTER 3
+#define MANEUVER 'M'
+#define DISTANCE_TO_NEXT_STEP 'N'
+#define DISTANCE_TO_DESTINATION 'D'
+#define TIME 'T'
+#define SPEED 'S'
+
+#define SERIAL_CONNECTION Serial
+#define BUSY_WAIT while(!SERIAL_CONNECTION.available()){}
+
 
 
 /**
@@ -84,11 +95,51 @@ void setup() {
 
 void loop() {
 
-  if (Serial.available()){
-    char rec = Serial.read();
-    gui.paintSpeed(rec);
-    epd.DisplayFrame();
-    Serial.write(rec);
+  if (SERIAL_CONNECTION.available()){
+    char readChar = SERIAL_CONNECTION.read();
+    //Read until a new START_CHARACTER is recognized
+    if (readChar == START_CHARACTER){
+      BUSY_WAIT
+      readChar = SERIAL_CONNECTION.read();
+      switch(readChar){
+        case MANEUVER:
+        break;
+
+        case DISTANCE_TO_NEXT_STEP:
+        BUSY_WAIT
+        //distance is send as 16 Bit int
+        int16_t newDistance;
+        newDistance = SERIAL_CONNECTION.read();
+        newDistance = newDistance << 8;
+        BUSY_WAIT
+        newDistance += SERIAL_CONNECTION.read();
+        gui.paintDistanceToNextStep(newDistance);
+        epd.DisplayFrame();
+          gui.paintDistanceToNextStep(newDistance);
+        epd.DisplayFrame();
+        break;
+
+        case DISTANCE_TO_DESTINATION:
+
+        break;
+
+        case TIME:
+        break;
+
+        case SPEED:
+          BUSY_WAIT
+          readChar = SERIAL_CONNECTION.read();
+          gui.paintSpeed(readChar);
+          epd.DisplayFrame();
+          gui.paintSpeed(readChar);
+          epd.DisplayFrame();
+        break;
+      }
+    }
+    else{
+      SERIAL_CONNECTION.write("\r\nunknown: ");
+      SERIAL_CONNECTION.write(readChar);
+    }
   }
 
 
