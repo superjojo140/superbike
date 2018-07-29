@@ -69,12 +69,12 @@ void setup() {
 
 
   gui.paintStatusBar("86%","","12:03");
-  gui.paintNavigationStep("Rechts","in 100m",TURN_RIGHT,"  auf Mittelstr.");
+  gui.paintNavigationStep("Rechts auf Mittelstrasse", TURN_RIGHT);
   gui.paintSpeed(23);
   epd.DisplayFrame();
  //Once Again because of the two memory areas
   gui.paintStatusBar("86%","","12:03");
-  gui.paintNavigationStep("Rechts","in 100m",TURN_RIGHT,"  auf Mittelstr.");
+  gui.paintNavigationStep("Rechts auf Mittelstrasse", TURN_RIGHT);
   gui.paintSpeed(23);
   epd.DisplayFrame();
 

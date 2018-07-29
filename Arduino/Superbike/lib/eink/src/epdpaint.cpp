@@ -165,13 +165,13 @@ void Paint::DrawCharAt(int x, int y, char ascii_char, sFONT* font, int colored) 
 /**
 *  @brief: this displays a string on the frame buffer but not refresh
 */
-void Paint::DrawStringAt(int x, int y, const char* text, sFONT* font, int colored) {
+void Paint::DrawStringAt(int x, int y, const char* text, sFONT* font, int colored, unsigned char maxLength) {
     const char* p_text = text;
-    unsigned int counter = 0;
+    unsigned char counter = 0;
     int refcolumn = x;
 
     /* Send the string character by character on EPD */
-    while (*p_text != 0) {
+    while (*p_text != 0 && counter < maxLength) {
         /* Display one character on EPD */
         DrawCharAt(refcolumn, y, *p_text, font, colored);
         /* Decrement the column position by 16 */

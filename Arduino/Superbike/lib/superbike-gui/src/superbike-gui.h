@@ -9,12 +9,14 @@
 #define COLORED     0
 #define UNCOLORED   1
 
+#define MAX_ROW_LENGTH 14
+
 class SuperbikeGui{
 public:
 SuperbikeGui(Paint *paint, Epd *epd);
 void paintDistanceToNextStep(int16_t distance);
 void paintStatusBar(char *textLeft , char *textMiddle, char *textRight);
-void paintNavigationStep(char *textTop, char *textBottom, unsigned char arrowType, char *streetName);
+void paintNavigationStep(char *text, unsigned char arrowType);
 void paintSpeed(char speed);
 
 private:

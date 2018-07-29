@@ -58,9 +58,9 @@ void SuperbikeGui::paintStatusBar(char *textLeft , char *textMiddle, char *textR
   this->paint->SetWidth(200);
   this->paint->SetHeight(20);
   this->paint->Clear(COLORED);
-  this->paint->DrawStringAt(2, 3, textLeft, &Font16, UNCOLORED);
-  this->paint->DrawStringAt(7*11, 3, textMiddle, &Font16, UNCOLORED);
-  this->paint->DrawStringAt(13*11, 3, textRight, &Font16, UNCOLORED);
+  this->paint->DrawStringAt(2, 3, textLeft, &Font16, UNCOLORED,MAX_ROW_LENGTH);
+  this->paint->DrawStringAt(7*11, 3, textMiddle, &Font16, UNCOLORED,MAX_ROW_LENGTH);
+  this->paint->DrawStringAt(13*11, 3, textRight, &Font16, UNCOLORED,MAX_ROW_LENGTH);
   this->epd->SetFrameMemory(this->paint->GetImage(), 0, 0, this->paint->GetWidth(), this->paint->GetHeight());
 }
 
@@ -72,36 +72,32 @@ void SuperbikeGui::paintDistanceToNextStep(int16_t distance){
     this->paint->SetWidth(200);
     this->paint->SetHeight(30);
     this->paint->Clear(COLORED);
-    this->paint->DrawStringAt(10, 5, distanceAsString, &Font24, UNCOLORED);
-    this->epd->SetFrameMemory(this->paint->GetImage(), 0, 120, this->paint->GetWidth(), this->paint->GetHeight());
+    this->paint->DrawStringAt(10, 5, distanceAsString, &Font24, UNCOLORED,MAX_ROW_LENGTH);
+    this->epd->SetFrameMemory(this->paint->GetImage(), 0, 110, this->paint->GetWidth(), this->paint->GetHeight());
 
 }
 
 
-void SuperbikeGui::paintNavigationStep(char *textTop, char *textBottom, unsigned char arrowType, char *streetName){
- //For the Top Text - This is splittet because of size of the paints image buffer :-(
-
-  //For the Bottom Text
+void SuperbikeGui::paintNavigationStep(char *text, unsigned char arrowType){
+ //For the Top Text (first 11 Characters)
+ this->paint->SetWidth(200);
+ this->paint->SetHeight(30);
+ this->paint->Clear(UNCOLORED);
+ this->paint->DrawStringAt(5, 5, text, &Font20, COLORED,MAX_ROW_LENGTH);
+ this->epd->SetFrameMemory(this->paint->GetImage(), 0, 140, this->paint->GetWidth(), this->paint->GetHeight());
+  //For the Bottom Text (next 11 characters)
   this->paint->SetWidth(200);
   this->paint->SetHeight(30);
-  this->paint->Clear(COLORED);
-  this->paint->DrawStringAt(10, 5, textBottom, &Font24, UNCOLORED);
-  this->epd->SetFrameMemory(this->paint->GetImage(), 0, 150, this->paint->GetWidth(), this->paint->GetHeight());
+  this->paint->Clear(UNCOLORED);
+  this->paint->DrawStringAt(5, 5, text+MAX_ROW_LENGTH , &Font20, COLORED,MAX_ROW_LENGTH);
+  this->epd->SetFrameMemory(this->paint->GetImage(), 0, 170, this->paint->GetWidth(), this->paint->GetHeight());
   //Draw the arrow - using the super cool arrow lib :-)
   this->paint->SetWidth(60);
   this->paint->SetHeight(60);
   this->paint->Clear(COLORED);
   Arrow arrow(arrowType,this->paint,this->epd);
-  arrow.drawAt(142, 122, UNCOLORED, 2, 5);
-  //Draw the street streetNamethis->paint->Clear(COLORED);
-  this->paint->SetWidth(200);
-  this->paint->SetHeight(20);
-  this->paint->Clear(UNCOLORED);
-  this->paint->DrawStringAt(3,3, streetName, &Font16, COLORED);
-  this->epd->SetFrameMemory(this->paint->GetImage(), 0, 180, this->paint->GetWidth(), this->paint->GetHeight());
-
-
-}
+  arrow.drawAt(15, 45, COLORED, 2, 5);
+  }
 
 
 void SuperbikeGui::paintSpeed(char speed){
@@ -124,7 +120,7 @@ void SuperbikeGui::paintSpeed(char speed){
   this->paint->SetHeight(20);
   this->paint->Clear(UNCOLORED);
   const char kmh[]= "kmh";
-  this->paint->DrawStringAt(0,0, kmh, &Font16, COLORED);
+  this->paint->DrawStringAt(0,0, kmh, &Font16, COLORED,MAX_ROW_LENGTH);
   //SetFrameMemory twice
   this->epd->SetFrameMemory(this->paint->GetImage(), 160, 90, this->paint->GetWidth(), this->paint->GetHeight());
 }
