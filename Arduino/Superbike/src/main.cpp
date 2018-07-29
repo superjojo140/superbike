@@ -20,7 +20,7 @@ SoftwareSerial BTSerial(2, 3); // RX | TX
 #define TIME 'T'
 #define SPEED 'S'
 
-#define SERIAL_CONNECTION Serial
+#define SERIAL_CONNECTION BTSerial
 #define BUSY_WAIT while(!SERIAL_CONNECTION.available()){}
 
 
@@ -102,25 +102,43 @@ void loop() {
       BUSY_WAIT
       readChar = SERIAL_CONNECTION.read();
       switch(readChar){
-        case MANEUVER:
+        case MANEUVER:{
+          BUSY_WAIT
+          unsigned char currentManeuverId = SERIAL_CONNECTION.read();
+          char message[2*MAX_ROW_LENGTH];
+          unsigned char counter = 0;
+          BUSY_WAIT
+          readChar = SERIAL_CONNECTION.read();
+          while(readChar != END_CHARACTER && counter < 2*MAX_ROW_LENGTH){
+            message[counter] = readChar;
+            counter++;
+            BUSY_WAIT
+            readChar = SERIAL_CONNECTION.read();
+          }
+          gui.paintNavigationStep(message, currentManeuverId);
+          epd.DisplayFrame();
+          gui.paintNavigationStep(message, currentManeuverId);
+          epd.DisplayFrame();
+        }
         break;
 
         case DISTANCE_TO_NEXT_STEP:
-        BUSY_WAIT
-        //distance is send as 16 Bit int
-        int16_t newDistance;
-        newDistance = SERIAL_CONNECTION.read();
-        newDistance = newDistance << 8;
-        BUSY_WAIT
-        newDistance += SERIAL_CONNECTION.read();
-        gui.paintDistanceToNextStep(newDistance);
-        epd.DisplayFrame();
+        {
+          BUSY_WAIT
+          //distance is send as 16 Bit int
+          int16_t newDistance;
+          newDistance = SERIAL_CONNECTION.read();
+          newDistance = newDistance << 8;
+          BUSY_WAIT
+          newDistance += SERIAL_CONNECTION.read();
           gui.paintDistanceToNextStep(newDistance);
-        epd.DisplayFrame();
+          epd.DisplayFrame();
+          gui.paintDistanceToNextStep(newDistance);
+          epd.DisplayFrame();
+        }
         break;
 
         case DISTANCE_TO_DESTINATION:
-
         break;
 
         case TIME:
