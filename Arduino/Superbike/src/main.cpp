@@ -69,14 +69,12 @@ void setup() {
 
 
   gui.paintStatusBar("86%","","12:03");
-  gui.paintNavigationStep("Rechts auf Mittelstrasse", TURN_RIGHT);
-  gui.paintSpeed(23);
+  gui.paintWelcomeScreen();
   epd.DisplayFrame();
  //Once Again because of the two memory areas
-  gui.paintStatusBar("86%","","12:03");
-  gui.paintNavigationStep("Rechts auf Mittelstrasse", TURN_RIGHT);
-  gui.paintSpeed(23);
-  epd.DisplayFrame();
+ gui.paintStatusBar("86%","","12:03");
+ gui.paintWelcomeScreen();
+ epd.DisplayFrame();
 
   //Start partial update mode
   if (epd.Init(lut_partial_update) != 0) {

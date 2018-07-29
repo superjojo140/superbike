@@ -18,6 +18,7 @@ void paintDistanceToNextStep(int16_t distance);
 void paintStatusBar(char *textLeft , char *textMiddle, char *textRight);
 void paintNavigationStep(char *text, unsigned char arrowType);
 void paintSpeed(char speed);
+void paintWelcomeScreen();
 
 private:
   Paint *paint;

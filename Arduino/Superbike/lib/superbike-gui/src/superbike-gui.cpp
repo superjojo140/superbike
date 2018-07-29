@@ -112,8 +112,7 @@ void SuperbikeGui::paintSpeed(char speed){
     this->paint->SetHeight(2 * myZoom + 4);
     this->paint->Clear(!myColor);
     this->epd->SetFrameMemory(this->paint->GetImage(), 80, 40, this->paint->GetWidth(), this->paint->GetHeight());
-}
-
+  }
   sjDrawNumber(120, 40, speed % 10, COLORED, 5, 30, this->paint, this->epd); //Draw ones
   //kmh Print
   this->paint->SetWidth(30);
@@ -121,6 +120,29 @@ void SuperbikeGui::paintSpeed(char speed){
   this->paint->Clear(UNCOLORED);
   const char kmh[]= "kmh";
   this->paint->DrawStringAt(0,0, kmh, &Font16, COLORED,MAX_ROW_LENGTH);
-  //SetFrameMemory twice
   this->epd->SetFrameMemory(this->paint->GetImage(), 160, 90, this->paint->GetWidth(), this->paint->GetHeight());
+}
+
+
+void SuperbikeGui::paintWelcomeScreen(){
+  /*
+  this->paint->SetWidth(80);
+  this->paint->SetHeight(80);
+  this->paint->Clear(UNCOLORED);
+  this->paint->DrawFilledCircle(40, 40, 40, COLORED);
+  this->epd->SetFrameMemory(this->paint->GetImage(), 60, 70, this->paint->GetWidth(), this->paint->GetHeight());
+  */
+
+  Arrow bluetoothArrow(BLUETOOTH_SYMBOL,this->paint,this->epd);
+  bluetoothArrow.drawAt(75, 70, COLORED, 2, 7);
+
+  this->paint->SetWidth(200);
+  this->paint->SetHeight(20);
+  this->paint->Clear(UNCOLORED);
+  const char text[]= "Bereit";
+  this->paint->DrawStringAt(50,0, text, &Font24, COLORED,MAX_ROW_LENGTH);
+  //SetFrameMemory twice
+  this->epd->SetFrameMemory(this->paint->GetImage(), 0, 150, this->paint->GetWidth(), this->paint->GetHeight());
+
+
 }

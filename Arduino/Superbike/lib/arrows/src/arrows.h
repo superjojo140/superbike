@@ -19,6 +19,7 @@
 #define TURN_SLIGHT_RIGHT 5
 #define STRAIGHT 6
 #define UTURN 7
+#define BLUETOOTH_SYMBOL 8
 
 
 class Arrow{
