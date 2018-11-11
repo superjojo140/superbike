@@ -139,10 +139,14 @@ void SuperbikeGui::paintWelcomeScreen(){
   this->paint->SetWidth(200);
   this->paint->SetHeight(20);
   this->paint->Clear(UNCOLORED);
-  const char text[]= "Bereit";
+  const char text[]= "Superbike";
   this->paint->DrawStringAt(50,0, text, &Font24, COLORED,MAX_ROW_LENGTH);
   //SetFrameMemory twice
   this->epd->SetFrameMemory(this->paint->GetImage(), 0, 150, this->paint->GetWidth(), this->paint->GetHeight());
 
+
+}
+
+void SuperbikeGui::paintTime(char *currentTime){
 
 }

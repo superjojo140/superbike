@@ -19,6 +19,7 @@ void paintStatusBar(char *textLeft , char *textMiddle, char *textRight);
 void paintNavigationStep(char *text, unsigned char arrowType);
 void paintSpeed(char speed);
 void paintWelcomeScreen();
+void paintTime(char *currentTime);
 
 private:
   Paint *paint;

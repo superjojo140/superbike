@@ -19,6 +19,10 @@ SoftwareSerial BTSerial(2, 3); // RX | TX
 #define DISTANCE_TO_DESTINATION 'D'
 #define TIME 'T'
 #define SPEED 'S'
+#define NAVIGATION 'A'
+
+#define HOURS 0
+#define MINUTES 1
 
 #define SERIAL_CONNECTION BTSerial
 #define BUSY_WAIT while(!SERIAL_CONNECTION.available()){}
@@ -37,6 +41,18 @@ unsigned char image[1024];
 Paint paint(image, 0, 0);    // width should be the multiple of 8
 Epd epd;
 SuperbikeGui gui(&paint,&epd);
+char currentDisplayMode = TIME;
+
+//Variables for saving data to display
+//NAVIGATION
+unsigned char currentManeuverId = SERIAL_CONNECTION.read();
+char currentManeuverMessage[2*MAX_ROW_LENGTH];
+//distance is send as 16 Bit int
+int16_t currentDistanceToNextStep;
+//SPEED
+char currentSpeed;
+//TIME
+char currentTime[2];
 
 void setup() {
   // put your setup code here, to run once:
@@ -68,19 +84,18 @@ void setup() {
   //myTestArrow.drawAt(5,0,UNCOLORED,THICKNESS,ZOOM_FACTOR);
 
 
-  gui.paintStatusBar("86%","","12:03");
+
   gui.paintWelcomeScreen();
   epd.DisplayFrame();
  //Once Again because of the two memory areas
- gui.paintStatusBar("86%","","12:03");
  gui.paintWelcomeScreen();
  epd.DisplayFrame();
 
   //Start partial update mode
-  if (epd.Init(lut_partial_update) != 0) {
+  /*if (epd.Init(lut_partial_update) != 0) {
         Serial.print("e-Paper init failed");
         return;
-    }
+    */
 
 
   //Bluetooth setup
@@ -102,37 +117,40 @@ void loop() {
       switch(readChar){
         case MANEUVER:{
           BUSY_WAIT
-          unsigned char currentManeuverId = SERIAL_CONNECTION.read();
-          char message[2*MAX_ROW_LENGTH];
+          currentManeuverId = SERIAL_CONNECTION.read();
           unsigned char counter = 0;
+          //TODO currentManeuverMessage leeren
           BUSY_WAIT
           readChar = SERIAL_CONNECTION.read();
           while(readChar != END_CHARACTER && counter < 2*MAX_ROW_LENGTH){
-            message[counter] = readChar;
+            currentManeuverMessage[counter] = readChar;
             counter++;
             BUSY_WAIT
             readChar = SERIAL_CONNECTION.read();
           }
-          gui.paintNavigationStep(message, currentManeuverId);
-          epd.DisplayFrame();
-          gui.paintNavigationStep(message, currentManeuverId);
-          epd.DisplayFrame();
+          if(currentDisplayMode == NAVIGATION){
+            gui.paintNavigationStep(currentManeuverMessage, currentManeuverId);
+            epd.DisplayFrame();
+            gui.paintNavigationStep(currentManeuverMessage, currentManeuverId);
+            epd.DisplayFrame();
+          }
+
         }
         break;
 
         case DISTANCE_TO_NEXT_STEP:
         {
           BUSY_WAIT
-          //distance is send as 16 Bit int
-          int16_t newDistance;
-          newDistance = SERIAL_CONNECTION.read();
-          newDistance = newDistance << 8;
+          currentDistanceToNextStep = SERIAL_CONNECTION.read();
+          currentDistanceToNextStep = currentDistanceToNextStep << 8;
           BUSY_WAIT
-          newDistance += SERIAL_CONNECTION.read();
-          gui.paintDistanceToNextStep(newDistance);
-          epd.DisplayFrame();
-          gui.paintDistanceToNextStep(newDistance);
-          epd.DisplayFrame();
+          currentDistanceToNextStep += SERIAL_CONNECTION.read();
+          if(currentDisplayMode == NAVIGATION){
+            gui.paintDistanceToNextStep(currentDistanceToNextStep);
+            epd.DisplayFrame();
+            gui.paintDistanceToNextStep(currentDistanceToNextStep);
+            epd.DisplayFrame();
+          }
         }
         break;
 
@@ -140,15 +158,27 @@ void loop() {
         break;
 
         case TIME:
+        BUSY_WAIT
+        currentTime[HOURS] = SERIAL_CONNECTION.read();
+        BUSY_WAIT
+        currentTime[MINUTES] = SERIAL_CONNECTION.read();
+        if(currentDisplayMode == TIME){
+          gui.paintTime(currentTime);
+          epd.DisplayFrame();
+          gui.paintTime(currentTime);
+          epd.DisplayFrame();
+        }
         break;
 
         case SPEED:
           BUSY_WAIT
-          readChar = SERIAL_CONNECTION.read();
-          gui.paintSpeed(readChar);
-          epd.DisplayFrame();
-          gui.paintSpeed(readChar);
-          epd.DisplayFrame();
+          currentSpeed = SERIAL_CONNECTION.read();
+          if(currentDisplayMode == SPEED){
+            gui.paintSpeed(currentSpeed);
+            epd.DisplayFrame();
+            gui.paintSpeed(currentSpeed);
+            epd.DisplayFrame();
+          }
         break;
       }
     }
@@ -157,6 +187,11 @@ void loop() {
       SERIAL_CONNECTION.write(readChar);
     }
   }
+
+  //Displaying data
+  //NAVIGATION
+
+
 
 
   // Keep reading from HC-05 and send to Arduino Serial Monitor
